@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "491711060603",
+    "project_id": "adeel-24cd9",
+    "storage_bucket": "adeel-24cd9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:491711060603:android:cfa555c267498a43f820de",
+        "android_client_info": {
+          "package_name": "com.chakibelfil.adeel"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "491711060603-bmthnqdvofde5l2el4r2ah1uoch8trul.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.chakibelfil.adeel",
+            "certificate_hash": "57e2db4d4e913e361cc41ae28563acb21c2a5ac1"
+          }
+        },
+        {
+          "client_id": "491711060603-m6uhnp3vmqq9be726t8cfvgep5bsn085.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAS3F3EEZdQ43J9xsU2lpJrow6otn2N4O8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "491711060603-m6uhnp3vmqq9be726t8cfvgep5bsn085.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
