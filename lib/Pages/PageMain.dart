@@ -45,8 +45,7 @@ class _PageMainState extends State<PageMain> {
           ),
         ],
       ),
-      body: Obx(
-        () => SingleChildScrollView(
+      body: SingleChildScrollView(
           child: Container(
             height: MediaQuery.of(context).size.height,
            padding: const EdgeInsets.symmetric(horizontal: 15),
@@ -66,7 +65,7 @@ class _PageMainState extends State<PageMain> {
                 Text("Economisez jusqu'a 60% sur le transport routier",
                     style: GoogleFonts.abel(fontSize: 30)),
 
-                SizedBox(height: 20),
+                SizedBox(height: 5),
                 myInputField(title: "De?", txtContorller: txtDeController),
                 SizedBox(height: 5),
                myInputField(title: "Vers?",txtContorller: txtDeController),
@@ -89,7 +88,7 @@ class _PageMainState extends State<PageMain> {
             ),
           ),
         ),
-      ),
+      
     );
   }
 }

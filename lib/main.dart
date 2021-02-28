@@ -5,15 +5,12 @@ import 'package:ship_me/Pages/PageMain.dart';
 
 import 'Pages/welcomePage.dart';
 
-void main()async {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   runApp(GetMaterialApp(
-
     theme: ThemeData(
-      primaryColor: Colors.orange,
-      secondaryHeaderColor: Colors.blue,
-    ),
+        primaryColor: Colors.orange, secondaryHeaderColor: Colors.blue),
     debugShowCheckedModeBanner: false,
     home: WelcomePage(),
   ));

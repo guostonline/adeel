@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -12,8 +13,7 @@ import 'loginPage.dart';
 TextEditingController txtNameController = TextEditingController();
 TextEditingController txtEmailController = TextEditingController();
 TextEditingController txtPasswordController = TextEditingController();
-
-FirebaseAuth instance = FirebaseAuth.instance;
+TextEditingController txtTelephoneController = TextEditingController();
 
 class SignUpPage extends StatefulWidget {
   SignUpPage({Key key, this.title}) : super(key: key);
@@ -47,7 +47,7 @@ class _SignUpPageState extends State<SignUpPage> {
   }
 
   Widget _entryField(TextEditingController txtController, String title,
-      {bool isPassword = false}) {
+      {bool isPassword = false, bool isPhone = false}) {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 10),
       child: Column(
@@ -61,6 +61,7 @@ class _SignUpPageState extends State<SignUpPage> {
             height: 10,
           ),
           TextField(
+              keyboardType: isPhone ? TextInputType.number : null,
               controller: txtController,
               obscureText: isPassword,
               decoration: InputDecoration(
@@ -74,27 +75,22 @@ class _SignUpPageState extends State<SignUpPage> {
 
   Widget _submitButton() {
     return InkWell(
-      onTap: () async {
-        try {
-          var test = await instance.createUserWithEmailAndPassword(
-              email: txtEmailController.text,
-              password: txtPasswordController.text);
+      onTap: () {
+        signInWithEmailAndPassword(
+                email: txtEmailController.text,
+                password: txtPasswordController.text)
+            .then((value) {
+          saveToFirebase(value.user.uid, {
+            "Name": txtNameController.text,
+            "Téléphone": txtTelephoneController.text,
+            "UserId": "users/${value.user.uid}",
+          });
+          print("new user enregistré");
+        });
 
-          Get.snackbar("Bienvenue chez adeel", "Vous avez bien enregistré");
-          //!Get.off(PageMain());
-        } on FirebaseAuthException catch (e) {
-          if (e.message == "The email address is badly formatted.")
-            Get.snackbar("Alert", "Invalid email réessayer");
-          if (e.message ==
-              "The email address is already in use by another account.")
-            Get.snackbar("Alert", "Ce email est déja enregistrer");
-          if (e.message == "Password should be at least 6 characters")
-            Get.snackbar(
-                "Alert", "Ce mot de pass est faible. 6 characters ou plus");
-          print(e.message);
-        } catch (e) {
-          Get.snackbar("Alert", e.message);
-        }
+        /*
+        
+        */
       },
       child: Container(
         width: MediaQuery.of(context).size.width,
@@ -181,8 +177,9 @@ class _SignUpPageState extends State<SignUpPage> {
   Widget _emailPasswordWidget() {
     return Column(
       children: <Widget>[
-        _entryField(txtNameController, "Username"),
-        _entryField(txtEmailController, "Email id"),
+        _entryField(txtNameController, "Nom "),
+        _entryField(txtTelephoneController, "Téléphone ", isPhone: true),
+        _entryField(txtEmailController, "Email"),
         _entryField(txtPasswordController, "Password", isPassword: true),
       ],
     );
@@ -217,9 +214,8 @@ class _SignUpPageState extends State<SignUpPage> {
                     ),
                     _submitButton(),
                     _googleButton(),
-                    SizedBox(height: height * .14),
+                    SizedBox(height: 20),
                     _loginAccountLabel(),
-
                   ],
                 ),
               ),
@@ -230,6 +226,7 @@ class _SignUpPageState extends State<SignUpPage> {
       ),
     );
   }
+
   Widget _googleButton() {
     return InkWell(
         onTap: () {
@@ -253,18 +250,16 @@ class _SignUpPageState extends State<SignUpPage> {
               Expanded(
                   flex: 1,
                   child: Container(
-                    padding: EdgeInsets.all(5),
+                      padding: EdgeInsets.all(5),
                       decoration: BoxDecoration(
-                       border: Border.all(color: Colors.blueAccent),
+                        border: Border.all(color: Colors.blueAccent),
                         color: Colors.white,
                         borderRadius: BorderRadius.only(
-
                             bottomLeft: Radius.circular(5),
                             topLeft: Radius.circular(5)),
                       ),
                       alignment: Alignment.center,
-                      child: Image.asset("images/google_logo.png"))
-              ),
+                      child: Image.asset("images/google_logo.png"))),
               Expanded(
                 flex: 5,
                 child: Container(
