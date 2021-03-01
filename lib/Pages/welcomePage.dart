@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
@@ -5,7 +7,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:ship_me/Pages/PageMain.dart';
 import 'package:ship_me/Pages/loginPage.dart';
 import 'package:ship_me/Pages/signup.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 
 class WelcomePage extends StatefulWidget {
   WelcomePage({Key key, this.title}) : super(key: key);
@@ -18,7 +19,7 @@ class WelcomePage extends StatefulWidget {
 
 class _WelcomePageState extends State<WelcomePage> {
   FirebaseAuth instance = FirebaseAuth.instance;
-  
+  AlignmentGeometry _alignment = Alignment.centerLeft;
   @override
   void initState() {
     super.initState();
@@ -28,6 +29,7 @@ class _WelcomePageState extends State<WelcomePage> {
         print("no user");
       } else
         Get.to(PageMain());
+      Get.snackbar("Bienvenue ${user.email}", "Vous avez bien enregistré");
       //Get.snackbar("Bienvenue", "Tu peu envoyer un demande");
     });
   }
@@ -35,8 +37,10 @@ class _WelcomePageState extends State<WelcomePage> {
   Widget _submitButton() {
     return InkWell(
       onTap: () {
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => LoginPage()));
+        _changeAligment();
+        Timer(Duration(seconds: 1), () {
+          Get.to(LoginPage());
+        });
       },
       child: Container(
         width: MediaQuery.of(context).size.width,
@@ -63,8 +67,10 @@ class _WelcomePageState extends State<WelcomePage> {
   Widget _signUpButton() {
     return InkWell(
       onTap: () {
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => SignUpPage()));
+        _changeAligment();
+        Timer(Duration(seconds: 1), () {
+          Get.to(SignUpPage());
+        });
       },
       child: Container(
         width: MediaQuery.of(context).size.width,
@@ -82,27 +88,28 @@ class _WelcomePageState extends State<WelcomePage> {
     );
   }
 
-  Widget _title() {
-    return RichText(
-      textAlign: TextAlign.center,
-      text: TextSpan(
-          text: 'Ad',
-          style: GoogleFonts.portLligatSans(
-            textStyle: Theme.of(context).textTheme.headline4,
-            fontSize: 30,
-            fontWeight: FontWeight.w700,
-            color: Colors.white,
-          ),
-          children: [
-            TextSpan(
-              text: 'ee',
-              style: TextStyle(color: Colors.black, fontSize: 30),
-            ),
-            TextSpan(
-              text: 'l',
-              style: TextStyle(color: Colors.white, fontSize: 30),
-            ),
-          ]),
+  Widget _logo() {
+    return Container(
+      child: Image.asset(
+        "images/logo.png",
+        fit: BoxFit.contain,
+      ),
+    );
+  }
+
+  Widget _truckAnimation() {
+    return Container(
+      width: double.infinity,
+      height: 80,
+      child: AnimatedAlign(
+        duration: Duration(seconds: 2),
+        curve: Curves.bounceInOut,
+        alignment: _alignment,
+        child: Image.asset(
+          "images/truck.png",
+          fit: BoxFit.cover,
+        ),
+      ),
     );
   }
 
@@ -125,27 +132,33 @@ class _WelcomePageState extends State<WelcomePage> {
               gradient: LinearGradient(
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
-                  colors: [Color(0xfffbb448), Color(0xffe46b10)])),
+                  colors: [Colors.orangeAccent, Colors.red])),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: <Widget>[
-              _title(),
-              SizedBox(
-                height: 80,
-              ),
+              SizedBox(height: 80),
+              _logo(),
+              Spacer(),
+              _truckAnimation(),
               _submitButton(),
               SizedBox(
                 height: 20,
               ),
               _signUpButton(),
               SizedBox(
-                height: 20,
+                height: 80,
               ),
             ],
           ),
         ),
       ),
     );
+  }
+
+  void _changeAligment() {
+    setState(() {
+      _alignment = Alignment.centerRight;
+    });
   }
 }

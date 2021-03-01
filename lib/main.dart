@@ -1,7 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:ship_me/Pages/PageMain.dart';
 
 import 'Pages/welcomePage.dart';
 
@@ -10,7 +9,7 @@ void main() async {
   await Firebase.initializeApp();
   runApp(GetMaterialApp(
     theme: ThemeData(
-        primaryColor: Colors.orange, secondaryHeaderColor: Colors.blue),
+        primaryColor: Color(0xffff6f00), secondaryHeaderColor: Colors.orange),
     debugShowCheckedModeBanner: false,
     home: WelcomePage(),
   ));

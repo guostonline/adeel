@@ -74,10 +74,9 @@ class _LoginPageState extends State<LoginPage> {
     return InkWell(
       onTap: () async {
         try {
-          UserCredential userCredential = await FirebaseAuth.instance
-              .signInWithEmailAndPassword(
-                  email: txtEmailController.text,
-                  password: txtPasswordController.text);
+          FirebaseAuth.instance.signInWithEmailAndPassword(
+              email: txtEmailController.text.trim(),
+              password: txtPasswordController.text.trim());
         } on FirebaseAuthException catch (e) {
           if (e.code == 'user-not-found') {
             Get.snackbar("Alert", "utilisateur non trouver!");
@@ -109,7 +108,7 @@ class _LoginPageState extends State<LoginPage> {
             gradient: LinearGradient(
                 begin: Alignment.centerLeft,
                 end: Alignment.centerRight,
-                colors: [Color(0xfffbb448), Color(0xfff7892b)])),
+                colors: [Colors.red.shade600, Colors.red])),
         child: Text(
           'Login',
           style: TextStyle(fontSize: 20, color: Colors.white),
@@ -155,11 +154,10 @@ class _LoginPageState extends State<LoginPage> {
     return InkWell(
         onTap: () {
           signInWithGoogle().then((value) {
-            if (value.user.displayName != null) {
-              Get.to(PageMain());
-              Get.snackbar("Bienvenue", "${value.user.displayName}",
-                  backgroundColor: Colors.orange);
-            }
+            Get.to(PageMain());
+            Get.snackbar("Bienvenue", "${value.user.displayName}",
+                backgroundColor: Colors.orange);
+
             print(value.additionalUserInfo);
           });
         },
@@ -172,17 +170,16 @@ class _LoginPageState extends State<LoginPage> {
           child: Row(
             children: <Widget>[
               Expanded(
-                flex: 1,
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Colors.red.shade50,
-                    borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.circular(5),
-                        topLeft: Radius.circular(5)),
-                  ),
-                  alignment: Alignment.center,
-                  child: Image.asset("images/google_logo.png"))
-              ),
+                  flex: 1,
+                  child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.red.shade50,
+                        borderRadius: BorderRadius.only(
+                            bottomLeft: Radius.circular(5),
+                            topLeft: Radius.circular(5)),
+                      ),
+                      alignment: Alignment.center,
+                      child: Image.asset("images/google_logo.png"))),
               Expanded(
                 flex: 5,
                 child: Container(
@@ -242,7 +239,7 @@ class _LoginPageState extends State<LoginPage> {
     return RichText(
       textAlign: TextAlign.center,
       text: TextSpan(
-          text: 'Ad',
+          text: 'Entree ',
           style: GoogleFonts.portLligatSans(
             textStyle: Theme.of(context).textTheme.headline4,
             fontSize: 30,
@@ -251,12 +248,16 @@ class _LoginPageState extends State<LoginPage> {
           ),
           children: [
             TextSpan(
-              text: 'ee',
+              text: 'Email ',
               style: TextStyle(color: Colors.black, fontSize: 30),
             ),
             TextSpan(
-              text: 'l',
+              text: 'et ',
               style: TextStyle(color: Color(0xffe46b10), fontSize: 30),
+            ),
+            TextSpan(
+              text: 'Password',
+              style: TextStyle(color: Colors.black, fontSize: 30),
             ),
           ]),
     );
@@ -296,13 +297,7 @@ class _LoginPageState extends State<LoginPage> {
                   _emailPasswordWidget(),
                   SizedBox(height: 20),
                   _submitButton(),
-                  Container(
-                    padding: EdgeInsets.symmetric(vertical: 10),
-                    alignment: Alignment.centerRight,
-                    child: Text('Forgot Password ?',
-                        style: TextStyle(
-                            fontSize: 14, fontWeight: FontWeight.w500)),
-                  ),
+                  SizedBox(height: 20),
                   _divider(),
                   _facebookButton(),
                   SizedBox(height: height * .055),

@@ -1,5 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -38,7 +36,7 @@ class _SignUpPageState extends State<SignUpPage> {
               padding: EdgeInsets.only(left: 0, top: 10, bottom: 10),
               child: Icon(Icons.keyboard_arrow_left, color: Colors.black),
             ),
-            Text('Back',
+            Text('Retour',
                 style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500))
           ],
         ),
@@ -75,22 +73,19 @@ class _SignUpPageState extends State<SignUpPage> {
 
   Widget _submitButton() {
     return InkWell(
-      onTap: () {
-        signInWithEmailAndPassword(
+      onTap: () async {
+        await signInWithEmailAndPassword(
                 email: txtEmailController.text,
-                password: txtPasswordController.text)
+                password: txtPasswordController.text,
+                name: txtNameController.text)
             .then((value) {
           saveToFirebase(value.user.uid, {
             "Name": txtNameController.text,
+            "email": txtEmailController.text,
             "Téléphone": txtTelephoneController.text,
-            "UserId": "users/${value.user.uid}",
           });
           print("new user enregistré");
         });
-
-        /*
-        
-        */
       },
       child: Container(
         width: MediaQuery.of(context).size.width,
@@ -108,13 +103,75 @@ class _SignUpPageState extends State<SignUpPage> {
             gradient: LinearGradient(
                 begin: Alignment.centerLeft,
                 end: Alignment.centerRight,
-                colors: [Color(0xfffbb448), Color(0xfff7892b)])),
+                colors: [Colors.red.shade600, Colors.red])),
         child: Text(
-          'Register Now',
+          'Registre maintenant',
           style: TextStyle(fontSize: 20, color: Colors.white),
         ),
       ),
     );
+  }
+
+//TODO google
+  Widget _googleButton() {
+    return InkWell(
+        onTap: () {
+          signInWithGoogle().then((value) {
+            if (value.user.displayName != null) {
+              saveToFirebase(value.user.uid, {
+                "Name": value.user.displayName,
+                "email": value.user.email,
+                "Téléphone": value.user.phoneNumber,
+                "Photo": value.user.photoURL
+              });
+              Get.to(PageMain());
+              Get.snackbar("Bienvenue", "${value.user.displayName}",
+                  backgroundColor: Colors.orange);
+            }
+            print(value.additionalUserInfo);
+          });
+        },
+        child: Container(
+          height: 50,
+          margin: EdgeInsets.symmetric(vertical: 20),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.all(Radius.circular(10)),
+          ),
+          child: Row(
+            children: <Widget>[
+              Expanded(
+                  flex: 1,
+                  child: Container(
+                      padding: EdgeInsets.all(5),
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Colors.blueAccent),
+                        color: Colors.white,
+                        borderRadius: BorderRadius.only(
+                            bottomLeft: Radius.circular(5),
+                            topLeft: Radius.circular(5)),
+                      ),
+                      alignment: Alignment.center,
+                      child: Image.asset("images/google_logo.png"))),
+              Expanded(
+                flex: 5,
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Colors.red.shade800,
+                    borderRadius: BorderRadius.only(
+                        bottomRight: Radius.circular(5),
+                        topRight: Radius.circular(5)),
+                  ),
+                  alignment: Alignment.center,
+                  child: Text('Login avec Google',
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 18,
+                          fontWeight: FontWeight.w400)),
+                ),
+              ),
+            ],
+          ),
+        ));
   }
 
   Widget _loginAccountLabel() {
@@ -131,7 +188,7 @@ class _SignUpPageState extends State<SignUpPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text(
-              'Already have an account ?',
+              'Vous avez déja ?',
               style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600),
             ),
             SizedBox(
@@ -154,7 +211,7 @@ class _SignUpPageState extends State<SignUpPage> {
     return RichText(
       textAlign: TextAlign.center,
       text: TextSpan(
-          text: 'Ad',
+          text: 'Vos ',
           style: GoogleFonts.portLligatSans(
             textStyle: Theme.of(context).textTheme.headline4,
             fontSize: 30,
@@ -163,12 +220,8 @@ class _SignUpPageState extends State<SignUpPage> {
           ),
           children: [
             TextSpan(
-              text: 'ee',
-              style: TextStyle(color: Colors.black, fontSize: 30),
-            ),
-            TextSpan(
-              text: 'l',
-              style: TextStyle(color: Color(0xffe46b10), fontSize: 30),
+              text: 'Informations  ',
+              style: TextStyle(color: Colors.black, fontSize: 22),
             ),
           ]),
     );
@@ -207,7 +260,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   children: <Widget>[
                     SizedBox(height: height * .2),
                     _title(),
-                    SizedBox(height: 50),
+                    SizedBox(height: 20),
                     _emailPasswordWidget(),
                     SizedBox(
                       height: 20,
@@ -225,60 +278,5 @@ class _SignUpPageState extends State<SignUpPage> {
         ),
       ),
     );
-  }
-
-  Widget _googleButton() {
-    return InkWell(
-        onTap: () {
-          signInWithGoogle().then((value) {
-            if (value.user.displayName != null) {
-              Get.to(PageMain());
-              Get.snackbar("Bienvenue", "${value.user.displayName}",
-                  backgroundColor: Colors.orange);
-            }
-            print(value.additionalUserInfo);
-          });
-        },
-        child: Container(
-          height: 50,
-          margin: EdgeInsets.symmetric(vertical: 20),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.all(Radius.circular(10)),
-          ),
-          child: Row(
-            children: <Widget>[
-              Expanded(
-                  flex: 1,
-                  child: Container(
-                      padding: EdgeInsets.all(5),
-                      decoration: BoxDecoration(
-                        border: Border.all(color: Colors.blueAccent),
-                        color: Colors.white,
-                        borderRadius: BorderRadius.only(
-                            bottomLeft: Radius.circular(5),
-                            topLeft: Radius.circular(5)),
-                      ),
-                      alignment: Alignment.center,
-                      child: Image.asset("images/google_logo.png"))),
-              Expanded(
-                flex: 5,
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Colors.blue,
-                    borderRadius: BorderRadius.only(
-                        bottomRight: Radius.circular(5),
-                        topRight: Radius.circular(5)),
-                  ),
-                  alignment: Alignment.center,
-                  child: Text('Login avec Google',
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 18,
-                          fontWeight: FontWeight.w400)),
-                ),
-              ),
-            ],
-          ),
-        ));
   }
 }
