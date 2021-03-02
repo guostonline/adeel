@@ -24,11 +24,11 @@ class _WelcomePageState extends State<WelcomePage> {
   @override
   void initState() {
     super.initState();
-    /*
+
     instance.authStateChanges().listen((User user) {
-      if (user.uid == null) {
-        Get.to(WelcomePage());
-        print("no user");
+      if (user.uid != null) {
+        Get.to(PageMain());
+        print(user.displayName +" is login");
       } else if (_controller.isLoginGoogle.value==true) Get.to(PageMain());
 
       else
@@ -38,14 +38,14 @@ class _WelcomePageState extends State<WelcomePage> {
 
 
     });
-*/
+
   }
 
   Widget _submitButton() {
     return InkWell(
       onTap: () {
         _changeAligment();
-        Timer(Duration(seconds: 1), () {
+        Timer(Duration(seconds: 2), () {
           Get.to(LoginPage());
         });
       },
@@ -75,7 +75,7 @@ class _WelcomePageState extends State<WelcomePage> {
     return InkWell(
       onTap: () {
         _changeAligment();
-        Timer(Duration(seconds: 1), () {
+        Timer(Duration(seconds: 2), () {
           Get.to(SignUpPage());
         });
       },
@@ -110,7 +110,7 @@ class _WelcomePageState extends State<WelcomePage> {
       height: 80,
       child: AnimatedAlign(
         duration: Duration(seconds: 2),
-        curve: Curves.bounceInOut,
+        curve: Curves.easeInExpo,
         alignment: _alignment,
         child: Image.asset(
           "images/truck.png",

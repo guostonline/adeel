@@ -18,12 +18,12 @@ class LoginPage extends StatefulWidget {
   @override
   _LoginPageState createState() => _LoginPageState();
 }
+
 TextEditingController txtEmailController = TextEditingController();
 TextEditingController txtPasswordController = TextEditingController();
 FirebaseAuth instance = FirebaseAuth.instance;
 
-Demande _controller=Get.put(Demande());
-
+Demande _controller = Get.put(Demande());
 
 class _LoginPageState extends State<LoginPage> {
   Widget _backButton() {
@@ -155,13 +155,11 @@ class _LoginPageState extends State<LoginPage> {
 
   Widget _facebookButton() {
     return InkWell(
-        onTap: ()async {
-       await   signInWithGoogle().then((value) =>
-       Get.to((PageMain)),
-       );
-        //  if (_controller.isLoginGoogle.value=true) Get.to(PageMain());
-
-
+        onTap: () async {
+          await signInWithGoogle().then(
+            (value) => Get.to((PageMain)),
+          );
+          //  if (_controller.isLoginGoogle.value=true) Get.to(PageMain());
         },
         child: Container(
           height: 50,
@@ -273,21 +271,25 @@ class _LoginPageState extends State<LoginPage> {
       ],
     );
   }
-@override
+
+  @override
   void initState() {
     super.initState();
     instance.authStateChanges().listen((User user) {
       if (user.uid != null) {
+
+        _controller.isLoginGoogle.value = true;
         Get.to(PageMain());
         print("Bien entree");
-      } else if (_controller.isLoginGoogle.value==true) Get.to(PageMain());
-
+      } else if (_controller.isLoginGoogle.value == true)
+        Get.to(PageMain());
       else
         Get.to(PageMain());
       Get.snackbar("Bienvenue ${user.email}", "Vous avez bien enregistré");
       //Get.snackbar("Bienvenue", "Tu peu envoyer un demande");
     });
   }
+
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;

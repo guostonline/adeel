@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -31,64 +32,66 @@ class _PageMainState extends State<PageMain> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        actions: [
-          IconButton(
-            onPressed: () {
-              instance.signOut();
-              googleLogOut();
-              Get.to(WelcomePage());
-            },
-            icon: Icon(Icons.logout),
-          ),
-          IconButton(
-            onPressed: () {},
-            icon: Icon(Icons.menu_rounded),
-          ),
-        ],
-      ),
-      body: SingleChildScrollView(
-        child: Container(
-          height: MediaQuery.of(context).size.height,
-          padding: const EdgeInsets.symmetric(horizontal: 15),
-          decoration: BoxDecoration(
-              color: Colors.white.withOpacity(0.5),
-              image: DecorationImage(
-                image: AssetImage("images/background.jpg"),
-                fit: BoxFit.fill,
-              )),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Image.asset(
-                "images/maps.png",
-                fit: BoxFit.cover,
-              ),
-              Text("Economisez jusqu'a 60% sur le transport routier",
-                  style: GoogleFonts.abel(fontSize: 30)),
-              SizedBox(height: 5),
-              myInputField(title: "De?", txtContorller: txtDeController),
-              _truckAnimation(),
-              myInputField(title: "Vers?", txtContorller: txtVersController),
-              SizedBox(height: 15),
-              RaisedButton(
-                color: Color(0xff0092CC),
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(18.0),
-                    side: BorderSide(color: Colors.white)),
-                onPressed: () {
-                  _changeAligment();
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          actions: [
+            IconButton(
+              onPressed: () {
+                instance.signOut();
+                googleLogOut();
+                Get.to(WelcomePage());
+              },
+              icon: Icon(Icons.logout),
+            ),
+            IconButton(
+              onPressed: () {},
+              icon: Icon(Icons.menu_rounded),
+            ),
+          ],
+        ),
+        body: SingleChildScrollView(
+          child: Container(
+            height: MediaQuery.of(context).size.height,
+            padding: const EdgeInsets.symmetric(horizontal: 15),
+            decoration: BoxDecoration(
+                color: Colors.white.withOpacity(0.5),
+                image: DecorationImage(
+                  image: AssetImage("images/background.jpg"),
+                  fit: BoxFit.fill,
+                )),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SizedBox(height: 30),
+                autoComplete(context,txtDeController,"localite"),
+                SizedBox(height: 30),
 
-                  _controller.localite.value = txtDeController.text;
-                  _controller.destination.value = txtVersController.text;
-                },
-                child: Text(
-                  "Etap suivante",
-                  style: GoogleFonts.abel(color: Colors.white, fontSize: 20),
+                autoComplete(context,txtVersController,"destination"),
+                SizedBox(height: 30),
+                _truckAnimation(),
+             //   Image.asset("images/maps.png", fit: BoxFit.cover),
+
+
+
+                RaisedButton(
+                  color: Color(0xff0092CC),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(18.0),
+                      side: BorderSide(color: Colors.white)),
+                  onPressed: () {
+                    _changeAligment();
+
+                    _controller.localite.value = txtDeController.text;
+                    _controller.destination.value = txtVersController.text;
+                  },
+                  child: Text(
+                    "Etap suivante",
+                    style: GoogleFonts.abel(color: Colors.white, fontSize: 20),
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
@@ -102,8 +105,8 @@ class _PageMainState extends State<PageMain> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(txtDeController.text == null ? "" : txtDeController.text,
-              style: TextStyle(fontSize: 25)),
+          AutoSizeText(txtDeController.text == null ? "" : txtDeController.text,maxFontSize: 16,),
+
           Expanded(
             child: Container(
               padding: EdgeInsets.symmetric(horizontal: 5),
