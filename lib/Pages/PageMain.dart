@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:ship_me/Logics/Auth.dart';
 import 'package:ship_me/Logics/Demande.dart';
 import 'package:ship_me/Pages/welcomePage.dart';
 import 'package:ship_me/Widgets/inputWidget.dart';
@@ -36,6 +37,7 @@ class _PageMainState extends State<PageMain> {
           IconButton(
             onPressed: () {
               instance.signOut();
+              googleLogOut();
               Get.to(WelcomePage());
             },
             icon: Icon(Icons.logout),

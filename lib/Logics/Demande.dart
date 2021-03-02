@@ -10,6 +10,7 @@ class Demande extends GetxController {
   RxBool txtFieldDe = false.obs;
   RxBool txtFieldVers = false.obs;
 
+  RxBool isLoginGoogle=false.obs;
   void isCategorieSelect(bool isDe) {
    isDe? txtFieldDe.value = true:txtFieldVers.value=true;
   }

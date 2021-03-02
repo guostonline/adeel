@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:ship_me/Logics/Demande.dart';
 import 'package:ship_me/Pages/PageMain.dart';
 import 'package:ship_me/Pages/loginPage.dart';
 import 'package:ship_me/Pages/signup.dart';
@@ -16,22 +17,28 @@ class WelcomePage extends StatefulWidget {
   @override
   _WelcomePageState createState() => _WelcomePageState();
 }
-
+Demande _controller=Get.put(Demande());
 class _WelcomePageState extends State<WelcomePage> {
   FirebaseAuth instance = FirebaseAuth.instance;
   AlignmentGeometry _alignment = Alignment.centerLeft;
   @override
   void initState() {
     super.initState();
+    /*
     instance.authStateChanges().listen((User user) {
-      if (user == null) {
+      if (user.uid == null) {
         Get.to(WelcomePage());
         print("no user");
-      } else
+      } else if (_controller.isLoginGoogle.value==true) Get.to(PageMain());
+
+      else
         Get.to(PageMain());
       Get.snackbar("Bienvenue ${user.email}", "Vous avez bien enregistré");
       //Get.snackbar("Bienvenue", "Tu peu envoyer un demande");
+
+
     });
+*/
   }
 
   Widget _submitButton() {
