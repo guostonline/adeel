@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:ui';
 
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -34,6 +35,7 @@ class _PageMainState extends State<PageMain> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+
         appBar: AppBar(
           actions: [
             IconButton(
@@ -51,46 +53,54 @@ class _PageMainState extends State<PageMain> {
           ],
         ),
         body: SingleChildScrollView(
-          child: Container(
-            height: MediaQuery.of(context).size.height,
-            padding: const EdgeInsets.symmetric(horizontal: 15),
-            decoration: BoxDecoration(
-                color: Colors.white.withOpacity(0.5),
-                image: DecorationImage(
-                  image: AssetImage("images/background.jpg"),
-                  fit: BoxFit.fill,
-                )),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                SizedBox(height: 30),
-                autoComplete(context,txtDeController,"localite"),
-                SizedBox(height: 30),
+          child: BackdropFilter(
+            filter: ImageFilter.blur(sigmaX: 8.0, sigmaY: 8.0),
+            child: Container(
 
-                autoComplete(context,txtVersController,"destination"),
-                SizedBox(height: 30),
-                _truckAnimation(),
-             //   Image.asset("images/maps.png", fit: BoxFit.cover),
+              height: MediaQuery.of(context).size.height*0.85,
+              padding: const EdgeInsets.symmetric(horizontal: 15),
+              decoration: BoxDecoration(
+                 color: Colors.black.withOpacity(0),
+                  image: DecorationImage(
+                    //colorFilter: ColorFilter.mode(Colors.orange, BlendMode.color),
+                    image: AssetImage("images/background.jpg"),
+                    fit: BoxFit.fill,
+
+                  )),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SizedBox(height: 60),
+                  AutoSizeText("Choisir votre destination.",style: GoogleFonts.abel(fontSize: 30),),
+                  SizedBox(height: 60),
+                  autoComplete(context,txtDeController,"localite"),
+                  SizedBox(height: 30),
+
+                  autoComplete(context,txtVersController,"destination"),
+                  SizedBox(height: 30),
+                  _truckAnimation(),
+             Spacer(),
 
 
 
-                RaisedButton(
-                  color: Color(0xff0092CC),
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(18.0),
-                      side: BorderSide(color: Colors.white)),
-                  onPressed: () {
-                    _changeAligment();
+                  RaisedButton(
+                    color: Color(0xff0092CC),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(18.0),
+                        side: BorderSide(color: Colors.white)),
+                    onPressed: () {
+                      _changeAligment();
 
-                    _controller.localite.value = txtDeController.text;
-                    _controller.destination.value = txtVersController.text;
-                  },
-                  child: Text(
-                    "Etap suivante",
-                    style: GoogleFonts.abel(color: Colors.white, fontSize: 20),
+                      _controller.localite.value = txtDeController.text;
+                      _controller.destination.value = txtVersController.text;
+                    },
+                    child: Text(
+                      "Etap suivante",
+                      style: GoogleFonts.abel(color: Colors.white, fontSize: 20),
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),
@@ -105,7 +115,7 @@ class _PageMainState extends State<PageMain> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          AutoSizeText(txtDeController.text == null ? "" : txtDeController.text,maxFontSize: 16,),
+          AutoSizeText(txtDeController.text == null ? "" : txtDeController.text,maxFontSize: 18),
 
           Expanded(
             child: Container(
@@ -121,9 +131,9 @@ class _PageMainState extends State<PageMain> {
               ),
             ),
           ),
-          Text(
-            txtVersController.text == null ? "" : txtVersController.text,
-            style: TextStyle(fontSize: 25),
+          AutoSizeText(
+            txtVersController.text == null ? "" : txtVersController.text,maxFontSize: 18,
+
           ),
         ],
       ),
