@@ -1,6 +1,10 @@
+import 'package:get/get.dart';
+import 'package:ship_me/Logics/Demande.dart';
+
+Demande _controller = Get.put(Demande());
 List<String> actionDemande = [
   "Démagements",
-  "Meuble, eletroménager",
+  "Meuble, élétroménager",
   "Caisses ou Cartons",
   "Bagages",
   "Marchandises",
