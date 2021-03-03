@@ -39,15 +39,18 @@ Widget myInputField({TextEditingController txtContorller, String title,bool isPa
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
+
       DefaultTextStyle(
           style: TextStyle(fontSize: 20,color: Colors.black),
-          child: Text(name=="localite"?"De?":"Vert?")),
+          child: Text(name=="Ville de départ"?"Ville de départ":"Ville de livraison")),
+      SizedBox(height: 5),
       AutoCompleteTextField(
+
         controller: textEditingController,
           itemSubmitted:(item){
           textEditingController.text=item;
-         if (name=="localite") _controller.localite=item;
-         if (name=="destination") _controller.destination=item;
+         if (name=="Ville de départ") _controller.localite=item;
+         if (name=="Ville de livraison") _controller.destination=item;
           },
           key: null,
           clearOnSubmit: false,

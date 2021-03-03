@@ -8,6 +8,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:ship_me/Logics/Auth.dart';
 import 'package:ship_me/Logics/Demande.dart';
+import 'package:ship_me/Pages/InformationPage.dart';
 import 'package:ship_me/Pages/welcomePage.dart';
 import 'package:ship_me/Widgets/inputWidget.dart';
 
@@ -30,75 +31,64 @@ class _PageMainState extends State<PageMain> {
   void initState() {
     super.initState();
   }
-
+final _keyForm=GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
+    return Scaffold(
 
-        appBar: AppBar(
-          actions: [
-            IconButton(
-              onPressed: () {
-                instance.signOut();
-                googleLogOut();
-                Get.to(WelcomePage());
-              },
-              icon: Icon(Icons.logout),
-            ),
-            IconButton(
-              onPressed: () {},
-              icon: Icon(Icons.menu_rounded),
-            ),
-          ],
-        ),
-        body: SingleChildScrollView(
-          child: BackdropFilter(
-            filter: ImageFilter.blur(sigmaX: 8.0, sigmaY: 8.0),
-            child: Container(
-
-              height: MediaQuery.of(context).size.height*0.85,
-              padding: const EdgeInsets.symmetric(horizontal: 15),
-              decoration: BoxDecoration(
-                 color: Colors.black.withOpacity(0),
-                  image: DecorationImage(
-                    //colorFilter: ColorFilter.mode(Colors.orange, BlendMode.color),
-                    image: AssetImage("images/background.jpg"),
-                    fit: BoxFit.fill,
-
-                  )),
+      body: SingleChildScrollView(
+        child: BackdropFilter(
+          filter: ImageFilter.blur(sigmaX: 8.0, sigmaY: 8.0),
+          child: Container(
+            height: MediaQuery.of(context).size.height ,
+            padding: const EdgeInsets.symmetric(horizontal: 15),
+            decoration: BoxDecoration(
+                color: Colors.black.withOpacity(0),
+                image: DecorationImage(
+                  //colorFilter: ColorFilter.mode(Colors.orange, BlendMode.color),
+                  image: AssetImage("images/background.jpg"),
+                  fit: BoxFit.fill,
+                )),
+            child: Form(
+              key: _keyForm,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
+                  SizedBox(height: 80),
+                  AutoSizeText(
+                    "Choisir votre destination.",
+                    style: GoogleFonts.abel(fontSize: 30),
+                  ),
                   SizedBox(height: 60),
-                  AutoSizeText("Choisir votre destination.",style: GoogleFonts.abel(fontSize: 30),),
-                  SizedBox(height: 60),
-                  autoComplete(context,txtDeController,"localite"),
+                  autoComplete(context, txtDeController, "Ville de départ"),
                   SizedBox(height: 30),
-
-                  autoComplete(context,txtVersController,"destination"),
+                  autoComplete(context, txtVersController, "Ville de livraison"),
                   SizedBox(height: 30),
                   _truckAnimation(),
-             Spacer(),
-
-
-
+                  Spacer(),
                   RaisedButton(
                     color: Color(0xff0092CC),
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(18.0),
                         side: BorderSide(color: Colors.white)),
                     onPressed: () {
-                      _changeAligment();
-
+                      if(txtDeController.text.isEmpty || txtVersController.text.isEmpty)Get.snackbar("Alert", "Veuillez remplir le formulaire");
+                     else{
+                       _changeAligment();
+                       Timer(Duration(seconds: 2),() {
+                         Get.to(InformationPage());
+                       });
+                      }
                       _controller.localite.value = txtDeController.text;
                       _controller.destination.value = txtVersController.text;
                     },
                     child: Text(
-                      "Etap suivante",
-                      style: GoogleFonts.abel(color: Colors.white, fontSize: 20),
+                      "Suivant",
+                      style:
+                          GoogleFonts.abel(color: Colors.white, fontSize: 20),
                     ),
                   ),
+                  SizedBox(height: 20),
                 ],
               ),
             ),
@@ -115,8 +105,8 @@ class _PageMainState extends State<PageMain> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          AutoSizeText(txtDeController.text == null ? "" : txtDeController.text,maxFontSize: 18),
-
+          AutoSizeText(txtDeController.text == null ? "" : txtDeController.text,
+              maxFontSize: 18),
           Expanded(
             child: Container(
               padding: EdgeInsets.symmetric(horizontal: 5),
@@ -132,8 +122,8 @@ class _PageMainState extends State<PageMain> {
             ),
           ),
           AutoSizeText(
-            txtVersController.text == null ? "" : txtVersController.text,maxFontSize: 18,
-
+            txtVersController.text == null ? "" : txtVersController.text,
+            maxFontSize: 18,
           ),
         ],
       ),
