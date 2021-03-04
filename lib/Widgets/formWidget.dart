@@ -20,45 +20,55 @@ Widget myCardHeader(
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(title, style: GoogleFonts.abel(fontSize: 25)),
-        Card(
-          elevation: 15,
-          child: Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: DefaultTextStyle(
-              style: GoogleFonts.actor(fontSize: 16, color: Colors.black),
-              child: Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text("Nom : "),
-                      Text(nameClient),
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text("Email : "),
-                      Text(email),
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text("Téléphone : "),
-                      Text(telephone),
-                    ],
-                  ),
-                  Row(
-                    // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(localite + " "),
-                      Expanded(child: Divider(color: Colors.black)),
-                      Text("> " + destination),
-                    ],
-                  ),
-                ],
+        Text(title,
+            style: GoogleFonts.abel(
+              fontSize: 25,
+            )),
+        Padding(
+          padding: EdgeInsets.only(left: 20),
+          child: Card(
+            color: Colors.white.withOpacity(0.8),
+            elevation: 15,
+            child: Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: DefaultTextStyle(
+                style: GoogleFonts.actor(
+                    fontSize: 16, color: Colors.black, height: 5),
+                child: Column(
+                
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text("Nom : "),
+                        Text(nameClient),
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text("Email : "),
+                        Text(email),
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text("Téléphone : "),
+                        Text(telephone),
+                      ],
+                    ),
+                    Row(
+                      // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(localite + " "),
+                        Expanded(child: Divider(color: Colors.black)),
+                        Text("> " + destination),
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
@@ -77,37 +87,42 @@ Widget disponibilite(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text("Disponibilié", style: GoogleFonts.abel(fontSize: 25)),
-          Card(
-            elevation: 15,
-            child: Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: DefaultTextStyle(
-                style: GoogleFonts.actor(fontSize: 16, color: Colors.black),
-                child: Column(
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text("Disponible dés le :"),
-                        Text(_controller.dateDesLe.value),
-                        IconButton(
-                          icon: Icon(Icons.date_range),
-                          onPressed: () => selectDate(context),
-                        )
-                      ],
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text("Disponible jusqu'à :"),
-                        Text(_controller.dateJusqua.value),
-                        IconButton(
-                          icon: Icon(Icons.date_range),
-                          onPressed: () => selectDate(context, isJusqua: true),
-                        )
-                      ],
-                    ),
-                  ],
+          Padding(
+            padding: EdgeInsets.only(left: 20),
+            child: Card(
+              color: Colors.white.withOpacity(0.8),
+              elevation: 15,
+              child: Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: DefaultTextStyle(
+                  style: GoogleFonts.actor(fontSize: 16, color: Colors.black),
+                  child: Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text("Disponible dés le :"),
+                          Text(_controller.dateDesLe.value),
+                          IconButton(
+                            icon: Icon(Icons.date_range),
+                            onPressed: () => selectDate(context),
+                          )
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text("Disponible jusqu'à :"),
+                          Text(_controller.dateJusqua.value),
+                          IconButton(
+                            icon: Icon(Icons.date_range),
+                            onPressed: () =>
+                                selectDate(context, isJusqua: true),
+                          )
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -125,12 +140,10 @@ Widget categorie() {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text("Categorie", style: GoogleFonts.abel(fontSize: 25)),
-          Container(
-            decoration: BoxDecoration(
-                image: DecorationImage(
-                    image: AssetImage(_controller.categorieImage.value))),
+          Padding(
+            padding: EdgeInsets.only(left: 20),
             child: Card(
-              color: Colors.white.withOpacity(0.9),
+              color: Colors.white.withOpacity(0.8),
               elevation: 15,
               child: Padding(
                 padding: const EdgeInsets.all(20.0),

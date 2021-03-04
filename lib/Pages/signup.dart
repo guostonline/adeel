@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 
 import 'package:google_fonts/google_fonts.dart';
 import 'package:ship_me/Logics/Auth.dart';
+import 'package:ship_me/Logics/SaveInformation.dart';
 import 'package:ship_me/Widgets/bezierContainer.dart';
 
 import 'PageMain.dart';
@@ -45,7 +46,7 @@ class _SignUpPageState extends State<SignUpPage> {
   }
 
   Widget _entryField(TextEditingController txtController, String title,
-      {bool isPassword = false, bool isPhone = false}) {
+      {bool isPassword = false, bool isPhone = false, Icon icon}) {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 10),
       child: Column(
@@ -59,10 +60,14 @@ class _SignUpPageState extends State<SignUpPage> {
             height: 10,
           ),
           TextField(
-              keyboardType: isPhone ? TextInputType.number : null,
               controller: txtController,
               obscureText: isPassword,
               decoration: InputDecoration(
+                  prefixIcon: icon,
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: const BorderSide(color: Colors.red, width: 2.0),
+                    borderRadius: BorderRadius.circular(25.0),
+                  ),
                   border: InputBorder.none,
                   fillColor: Color(0xfff3f3f4),
                   filled: true))
@@ -124,6 +129,8 @@ class _SignUpPageState extends State<SignUpPage> {
                 "Téléphone": value.user.phoneNumber,
                 "Photo": value.user.photoURL
               });
+              saveInforamtion(value.user.displayName, value.user.email,
+                  value.user.phoneNumber, value.user.photoURL);
               Get.to(PageMain());
               Get.snackbar("Bienvenue", "${value.user.displayName}",
                   backgroundColor: Colors.orange);
@@ -230,10 +237,12 @@ class _SignUpPageState extends State<SignUpPage> {
   Widget _emailPasswordWidget() {
     return Column(
       children: <Widget>[
-        _entryField(txtNameController, "Nom "),
-        _entryField(txtTelephoneController, "Téléphone ", isPhone: true),
-        _entryField(txtEmailController, "Email"),
-        _entryField(txtPasswordController, "Password", isPassword: true),
+        _entryField(txtNameController, "Nom ", icon: Icon(Icons.account_box)),
+        _entryField(txtTelephoneController, "Téléphone ",
+            isPhone: true, icon: Icon(Icons.phone)),
+        _entryField(txtEmailController, "Email", icon: Icon(Icons.email)),
+        _entryField(txtPasswordController, "Password",
+            isPassword: true, icon: Icon(Icons.add_moderator)),
       ],
     );
   }

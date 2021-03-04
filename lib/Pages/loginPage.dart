@@ -48,7 +48,7 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Widget _entryField(TextEditingController txtContorller, String title,
-      {bool isPassword = false}) {
+      {bool isPassword = false, Icon icon}) {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 10),
       child: Column(
@@ -61,13 +61,22 @@ class _LoginPageState extends State<LoginPage> {
           SizedBox(
             height: 10,
           ),
-          TextField(
-              controller: txtContorller,
-              obscureText: isPassword,
-              decoration: InputDecoration(
-                  border: InputBorder.none,
-                  fillColor: Color(0xfff3f3f4),
-                  filled: true))
+          Theme(
+            data: Theme.of(context).copyWith(splashColor: Colors.transparent),
+            child: TextField(
+                controller: txtContorller,
+                obscureText: isPassword,
+                decoration: InputDecoration(
+                    prefixIcon: icon,
+                    focusedBorder: OutlineInputBorder(
+                      borderSide:
+                          const BorderSide(color: Colors.red, width: 2.0),
+                      borderRadius: BorderRadius.circular(25.0),
+                    ),
+                    border: InputBorder.none,
+                    fillColor: Color(0xfff3f3f4),
+                    filled: true)),
+          )
         ],
       ),
     );
@@ -155,8 +164,8 @@ class _LoginPageState extends State<LoginPage> {
 
   Widget _facebookButton() {
     return InkWell(
-        onTap: () async {
-          await signInWithGoogle().then(
+        onTap: ()  {
+           signInWithGoogle().then(
             (value) => Get.to((PageMain)),
           );
           //  if (_controller.isLoginGoogle.value=true) Get.to(PageMain());
@@ -266,8 +275,9 @@ class _LoginPageState extends State<LoginPage> {
   Widget _emailPasswordWidget() {
     return Column(
       children: <Widget>[
-        _entryField(txtEmailController, "Email"),
-        _entryField(txtPasswordController, "Password", isPassword: true),
+        _entryField(txtEmailController, "Email", icon: Icon(Icons.email)),
+        _entryField(txtPasswordController, "Password",
+            isPassword: true, icon: Icon(Icons.admin_panel_settings_outlined)),
       ],
     );
   }
@@ -277,7 +287,6 @@ class _LoginPageState extends State<LoginPage> {
     super.initState();
     instance.authStateChanges().listen((User user) {
       if (user.uid != null) {
-
         _controller.isLoginGoogle.value = true;
         Get.to(PageMain());
         print("Bien entree");

@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:ship_me/Logics/Demande.dart';
 import 'package:ship_me/Widgets/formWidget.dart';
 
 class InformationPage extends StatefulWidget {
@@ -7,8 +9,9 @@ class InformationPage extends StatefulWidget {
   _InformationPageState createState() => _InformationPageState();
 }
 
+Demande _controller = Get.put(Demande());
+
 class _InformationPageState extends State<InformationPage> {
-  final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,23 +22,23 @@ class _InformationPageState extends State<InformationPage> {
           image: DecorationImage(
               image: AssetImage("images/background.jpg"), fit: BoxFit.cover),
         ),
-        child: Form(
-          key: _formKey,
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: SingleChildScrollView(
-              child: Column(
+        child: Padding(
+          padding: const EdgeInsets.only(left: 10.0, right: 10),
+          child: SingleChildScrollView(
+            child: Obx(
+              ()=> Column(
                 children: [
                   SizedBox(height: 100),
                   myCardHeader(
-                      nameClient: "chakib elfil",
-                      email: "guostonline@gmail.com",
-                      telephone: "0691140000",
-                      localite: "Rabat",
-                      destination: "Casablanca",
+                      nameClient: _controller.userName.value,
+                      email:  _controller.userEmail.value,
+                      telephone:  _controller.userTelephone.value,
+                      localite:  _controller.localite.value,
+                      destination:  _controller.destination.value,
                       title: "Inforamtions Client"),
                   SizedBox(height: 20),
                   categorie(),
+                  SizedBox(height: 20),
                   disponibilite(context),
                 ],
               ),

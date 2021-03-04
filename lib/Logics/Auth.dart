@@ -1,37 +1,45 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:ship_me/Logics/Demande.dart';
 import 'package:ship_me/Pages/PageMain.dart';
+import 'package:ship_me/Pages/welcomePage.dart';
 
 FirebaseAuth instance = FirebaseAuth.instance;
 FirebaseFirestore ds = FirebaseFirestore.instance;
- GoogleSignIn googleSignIn=GoogleSignIn();
-Demande _controller=Get.put(Demande());
-
+GoogleSignIn googleSignIn = GoogleSignIn();
 
 Future<UserCredential> signInWithGoogle() async {
-  // Trigger the authentication flow
   final GoogleSignInAccount googleUser = await GoogleSignIn().signIn();
-
-
-  // Obtain the auth details from the request
-  final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+  GoogleAuthCredential credential;
+  // Trigger the authentication flow
+  try {
+    // Obtain the auth details from the request
+    final GoogleSignInAuthentication googleAuth =
+        await googleUser.authentication;
 
     // Create a new credential
-  final GoogleAuthCredential credential = GoogleAuthProvider.credential(
-    accessToken: googleAuth.accessToken,
-    idToken: googleAuth.idToken,
-  );
- _controller.isLoginGoogle.value=true;
+    credential = GoogleAuthProvider.credential(
+      accessToken: googleAuth.accessToken,
+      idToken: googleAuth.idToken,
+    );
+  } catch (e) {
+    Get.snackbar("Alert", e.message);
+  }
+
   // Once signed in, return the UserCredential
   return await FirebaseAuth.instance.signInWithCredential(credential);
 }
-Future<void>googleLogOut()async{
+
+Future<void> googleLogOut() async {
   await googleSignIn.signOut();
+  await instance.signOut();
+  Get.to(WelcomePage());
   print("google log out");
 }
+
 Future<UserCredential> signInWithEmailAndPassword(
     {String email, String password, String name}) async {
   try {

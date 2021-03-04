@@ -31,66 +31,67 @@ class _PageMainState extends State<PageMain> {
   void initState() {
     super.initState();
   }
-final _keyForm=GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
       body: SingleChildScrollView(
         child: BackdropFilter(
           filter: ImageFilter.blur(sigmaX: 8.0, sigmaY: 8.0),
           child: Container(
-            height: MediaQuery.of(context).size.height ,
+            height: MediaQuery.of(context).size.height,
             padding: const EdgeInsets.symmetric(horizontal: 15),
             decoration: BoxDecoration(
                 color: Colors.black.withOpacity(0),
                 image: DecorationImage(
-                  //colorFilter: ColorFilter.mode(Colors.orange, BlendMode.color),
                   image: AssetImage("images/background.jpg"),
                   fit: BoxFit.fill,
                 )),
-            child: Form(
-              key: _keyForm,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SizedBox(height: 80),
-                  AutoSizeText(
-                    "Choisir votre destination.",
-                    style: GoogleFonts.abel(fontSize: 30),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SizedBox(height: 80),
+                Container(
+                    alignment: Alignment.centerLeft,
+                    child: IconButton(
+                        icon: (Icon(Icons.logout)),
+                        onPressed: () => googleLogOut())),
+                AutoSizeText(
+                  "Choisir votre destination.",
+                  style: GoogleFonts.abel(fontSize: 30),
+                ),
+                SizedBox(height: 60),
+                autoComplete(context, txtDeController, "Ville de départ"),
+                SizedBox(height: 30),
+                autoComplete(context, txtVersController, "Ville de livraison"),
+                SizedBox(height: 30),
+                _truckAnimation(),
+                Spacer(),
+                RaisedButton(
+                  color: Color(0xff0092CC),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(18.0),
+                      side: BorderSide(color: Colors.white)),
+                  onPressed: () {
+                    if (txtDeController.text.isEmpty ||
+                        txtVersController.text.isEmpty)
+                      Get.snackbar("Alert", "Veuillez remplir le formulaire");
+                    else {
+                      _changeAligment();
+                      Timer(Duration(seconds: 2), () {
+                        Get.to(InformationPage());
+                      });
+                    }
+                    _controller.localite.value = txtDeController.text;
+                    _controller.destination.value = txtVersController.text;
+                  },
+                  child: Text(
+                    "Suivant",
+                    style: GoogleFonts.abel(color: Colors.white, fontSize: 20),
                   ),
-                  SizedBox(height: 60),
-                  autoComplete(context, txtDeController, "Ville de départ"),
-                  SizedBox(height: 30),
-                  autoComplete(context, txtVersController, "Ville de livraison"),
-                  SizedBox(height: 30),
-                  _truckAnimation(),
-                  Spacer(),
-                  RaisedButton(
-                    color: Color(0xff0092CC),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(18.0),
-                        side: BorderSide(color: Colors.white)),
-                    onPressed: () {
-                      if(txtDeController.text.isEmpty || txtVersController.text.isEmpty)Get.snackbar("Alert", "Veuillez remplir le formulaire");
-                     else{
-                       _changeAligment();
-                       Timer(Duration(seconds: 2),() {
-                         Get.to(InformationPage());
-                       });
-                      }
-                      _controller.localite.value = txtDeController.text;
-                      _controller.destination.value = txtVersController.text;
-                    },
-                    child: Text(
-                      "Suivant",
-                      style:
-                          GoogleFonts.abel(color: Colors.white, fontSize: 20),
-                    ),
-                  ),
-                  SizedBox(height: 20),
-                ],
-              ),
+                ),
+                SizedBox(height: 20),
+              ],
             ),
           ),
         ),
@@ -112,7 +113,7 @@ final _keyForm=GlobalKey<FormState>();
               padding: EdgeInsets.symmetric(horizontal: 5),
               child: AnimatedAlign(
                 duration: Duration(seconds: 2),
-                curve: Curves.bounceInOut,
+                curve: Curves.fastOutSlowIn,
                 alignment: _alignment,
                 child: Image.asset(
                   "images/truck.png",

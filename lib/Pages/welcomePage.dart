@@ -3,8 +3,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:ship_me/Logics/Demande.dart';
+import 'package:ship_me/Logics/SaveInformation.dart';
 import 'package:ship_me/Pages/PageMain.dart';
 import 'package:ship_me/Pages/loginPage.dart';
 import 'package:ship_me/Pages/signup.dart';
@@ -17,7 +17,9 @@ class WelcomePage extends StatefulWidget {
   @override
   _WelcomePageState createState() => _WelcomePageState();
 }
-Demande _controller=Get.put(Demande());
+
+Demande _controller = Get.put(Demande());
+
 class _WelcomePageState extends State<WelcomePage> {
   FirebaseAuth instance = FirebaseAuth.instance;
   AlignmentGeometry _alignment = Alignment.centerLeft;
@@ -28,17 +30,63 @@ class _WelcomePageState extends State<WelcomePage> {
     instance.authStateChanges().listen((User user) {
       if (user.uid != null) {
         Get.to(PageMain());
-        print(user.displayName +" is login");
-      } else if (_controller.isLoginGoogle.value==true) Get.to(PageMain());
+        
 
+      } else if (_controller.isLoginGoogle.value == true)
+        Get.to(PageMain());
       else
         Get.to(PageMain());
       Get.snackbar("Bienvenue ${user.email}", "Vous avez bien enregistré");
-      //Get.snackbar("Bienvenue", "Tu peu envoyer un demande");
-
-
     });
+  }
 
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: SingleChildScrollView(
+        child: Container(
+          padding: EdgeInsets.symmetric(horizontal: 20),
+          height: MediaQuery.of(context).size.height,
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.all(Radius.circular(5)),
+              boxShadow: <BoxShadow>[
+                BoxShadow(
+                    color: Colors.grey.shade200,
+                    offset: Offset(2, 4),
+                    blurRadius: 5,
+                    spreadRadius: 2)
+              ],
+              gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [Colors.orangeAccent, Colors.red])),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: <Widget>[
+              SizedBox(height: 80),
+              _logo(),
+              Spacer(),
+              _truckAnimation(),
+              _submitButton(),
+              SizedBox(
+                height: 20,
+              ),
+              _signUpButton(),
+              SizedBox(
+                height: 80,
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  void _changeAligment() {
+    setState(() {
+      _alignment = Alignment.centerRight;
+    });
   }
 
   Widget _submitButton() {
@@ -110,7 +158,7 @@ class _WelcomePageState extends State<WelcomePage> {
       height: 80,
       child: AnimatedAlign(
         duration: Duration(seconds: 2),
-        curve: Curves.easeInExpo,
+        curve: Curves.fastOutSlowIn,
         alignment: _alignment,
         child: Image.asset(
           "images/truck.png",
@@ -118,54 +166,5 @@ class _WelcomePageState extends State<WelcomePage> {
         ),
       ),
     );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: SingleChildScrollView(
-        child: Container(
-          padding: EdgeInsets.symmetric(horizontal: 20),
-          height: MediaQuery.of(context).size.height,
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.all(Radius.circular(5)),
-              boxShadow: <BoxShadow>[
-                BoxShadow(
-                    color: Colors.grey.shade200,
-                    offset: Offset(2, 4),
-                    blurRadius: 5,
-                    spreadRadius: 2)
-              ],
-              gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [Colors.orangeAccent, Colors.red])),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: <Widget>[
-              SizedBox(height: 80),
-              _logo(),
-              Spacer(),
-              _truckAnimation(),
-              _submitButton(),
-              SizedBox(
-                height: 20,
-              ),
-              _signUpButton(),
-              SizedBox(
-                height: 80,
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  void _changeAligment() {
-    setState(() {
-      _alignment = Alignment.centerRight;
-    });
   }
 }
