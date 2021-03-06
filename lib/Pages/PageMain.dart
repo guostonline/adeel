@@ -9,7 +9,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:ship_me/Logics/Auth.dart';
 import 'package:ship_me/Logics/Demande.dart';
 import 'package:ship_me/Pages/InformationPage.dart';
-import 'package:ship_me/Pages/welcomePage.dart';
 import 'package:ship_me/Widgets/inputWidget.dart';
 
 FirebaseAuth instance = FirebaseAuth.instance;
@@ -45,7 +44,7 @@ class _PageMainState extends State<PageMain> {
             decoration: BoxDecoration(
                 color: Colors.black.withOpacity(0),
                 image: DecorationImage(
-                  image: AssetImage("images/background2.jpg"),
+                  image: AssetImage("images/background3.jpg"),
                   fit: BoxFit.fill,
                 )),
             child: Column(

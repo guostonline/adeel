@@ -20,7 +20,7 @@ class _InformationPageState extends State<InformationPage> {
         width: double.infinity,
         decoration: BoxDecoration(
           image: DecorationImage(
-              image: AssetImage("images/background.jpg"), fit: BoxFit.cover),
+              image: AssetImage("images/background3.jpg"), fit: BoxFit.cover),
         ),
         child: Padding(
           padding: const EdgeInsets.only(left: 10.0, right: 10),

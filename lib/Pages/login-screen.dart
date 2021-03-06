@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:ship_me/Logics/Auth.dart';
 import 'package:ship_me/Logics/Demande.dart';
 import 'package:ship_me/Logics/MyMessage.dart';
+import 'package:ship_me/Logics/SaveInformation.dart';
 import 'package:ship_me/Pages/create-new-account.dart';
 import 'package:ship_me/Pages/forgot-password.dart';
 import 'package:ship_me/Widgets/logoWithTruck.dart';
@@ -37,7 +38,7 @@ class _LoginScreenState extends State<LoginScreen> {
         Get.to(PageMain());
       else
         Get.to(LoginScreen());
-      Get.snackbar("Bienvenue ${user.email}", "Vous avez bien enregistré");
+
     });
   }
 
@@ -49,82 +50,99 @@ class _LoginScreenState extends State<LoginScreen> {
           image: 'images/background.jpg',
         ),
         Scaffold(
+          
           backgroundColor: Colors.transparent,
-          body: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              SizedBox(height: 50),
-              Flexible(
-                child: logoWithTruck(
-                    aligment: _alignment,
-                    logo: "images/logo.png",
-                    truckImage: "images/truck.png"),
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
+          body: SingleChildScrollView(
+
+            child: Container(
+              child:  Column(
+                mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  TextInputField(
-                    controller: txtEmailController,
-                    icon: FontAwesomeIcons.envelope,
-                    hint: 'Email',
-                    inputType: TextInputType.emailAddress,
-                    inputAction: TextInputAction.next,
+                  SizedBox(height: 80),
+                  Container(
+
+                    child: logoWithTruck(
+                        aligment: _alignment,
+                        logo: "images/logo.png",
+                        truckImage: "images/truck.png"),
+
                   ),
-                  PasswordInput(
-                    controller: txtPasswordController,
-                    icon: FontAwesomeIcons.lock,
-                    hint: 'Password',
-                    inputAction: TextInputAction.done,
-                  ),
-                  GestureDetector(
-                    onTap: () => Get.to(ForgotPassword()),
-                    child: Text(
-                      'Mot de pass oublié?',
-                      style: kBodyText,
+              SizedBox(height: 120),
+                  Container(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        TextInputField(
+                          controller: txtEmailController,
+                          icon: FontAwesomeIcons.envelope,
+                          hint: 'Email',
+                          inputType: TextInputType.emailAddress,
+                          inputAction: TextInputAction.next,
+                        ),
+                        PasswordInput(
+                          controller: txtPasswordController,
+                          icon: FontAwesomeIcons.lock,
+                          hint: 'Password',
+                          inputAction: TextInputAction.done,
+                        ),
+                        GestureDetector(
+                          onTap: () => Get.to(ForgotPassword()),
+                          child: Text(
+                            'Mot de pass oublié?',
+                            style: kBodyText,
+                          ),
+                        ),
+                        SizedBox(
+                          height: 25,
+                        ),
+                        RoundedButton(
+                          buttonName: 'Login',
+                          myFunction: () {
+                            _changeAligment();
+                            singIn(
+                                email: txtEmailController.text,
+                                password: txtPasswordController.text);
+                            print("chakib an error on login");
+                          },
+                          isGoogle: false,
+                        ),
+                        SizedBox(height: 10),
+                        RoundedButton(
+                          buttonName: 'Login avec google',
+                          isGoogle: true,
+                          myFunction: () {
+                        signInWithGoogle().then((value) {
+                         saveInforamtion(value.user.displayName,
+                             value.user.email, value.user.phoneNumber, value.user.photoURL);
+                         Get.to(PageMain());
+                        });
+    }),
+
+
+                        SizedBox(
+                          height: 25,
+                        ),
+                        GestureDetector(
+                          onTap: () => Get.to(CreateNewAccount()),
+                          child: Container(
+                            child: Text(
+                              'Créer un nouveau compte',
+                              style: kBodyTextSmoler,
+                            ),
+                            decoration: BoxDecoration(
+                                border: Border(
+                                    bottom: BorderSide(width: 1, color: kWhite))),
+                          ),
+                        ),
+
+                      ],
                     ),
                   ),
-                  SizedBox(
-                    height: 25,
-                  ),
-                  RoundedButton(
-                    buttonName: 'Login',
-                    myFunction: () {
-                      _changeAligment();
-                      singIn(
-                          email: txtEmailController.text,
-                          password: txtPasswordController.text);
-                      print("chakib an error on login");
-                    },
-                    isGoogle: false,
-                  ),
-                  SizedBox(height: 10),
-                  RoundedButton(
-                    buttonName: 'Login avec google',
-                    myFunction: () => Get.to(PageMain()),
-                    isGoogle: true,
-                  ),
-                  SizedBox(
-                    height: 25,
-                  ),
+
                 ],
               ),
-              GestureDetector(
-                onTap: () => Get.to(CreateNewAccount()),
-                child: Container(
-                  child: Text(
-                    'Créer un nouveau compte',
-                    style: kBodyTextSmoler,
-                  ),
-                  decoration: BoxDecoration(
-                      border: Border(
-                          bottom: BorderSide(width: 1, color: kWhite))),
-                ),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-            ],
-          ),
+            ),
+          )
         )
       ],
     );

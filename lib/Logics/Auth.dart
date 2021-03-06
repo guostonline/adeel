@@ -8,7 +8,6 @@ import 'package:ship_me/Logics/Demande.dart';
 import 'package:ship_me/Logics/MyMessage.dart';
 import 'package:ship_me/Pages/PageMain.dart';
 import 'package:ship_me/Pages/login-screen.dart';
-import 'package:ship_me/Pages/welcomePage.dart';
 
 FirebaseAuth instance = FirebaseAuth.instance;
 FirebaseFirestore ds = FirebaseFirestore.instance;
@@ -48,7 +47,7 @@ Future<UserCredential> signUpWithEmailAndPassword(
   try {
     var result = await instance.createUserWithEmailAndPassword(
         email: email, password: password);
-    print(result.user.email + "is login");
+
     Get.off(PageMain());
     return result;
   } on FirebaseAuthException catch (e) {
@@ -80,11 +79,7 @@ Future singIn({String email, String password}) async {
   try {
     var instane = await FirebaseAuth.instance
         .signInWithEmailAndPassword(email: email, password: password);
-    myMessage(
-      title: "Loging",
-      message: "Attendez SVP.....",
-      isPorgress: true,
-    );
+
   } on FirebaseAuthException catch (e) {
     if (e.code == 'user-not-found')
       myMessage(
