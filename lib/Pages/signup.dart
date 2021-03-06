@@ -79,10 +79,10 @@ class _SignUpPageState extends State<SignUpPage> {
   Widget _submitButton() {
     return InkWell(
       onTap: () async {
-        await signInWithEmailAndPassword(
+        await singIn(
                 email: txtEmailController.text,
                 password: txtPasswordController.text,
-                name: txtNameController.text)
+               )
             .then((value) {
           saveToFirebase(value.user.uid, {
             "Name": txtNameController.text,

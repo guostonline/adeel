@@ -1,10 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:ship_me/Logics/Demande.dart';
+import 'package:ship_me/Logics/MyMessage.dart';
 import 'package:ship_me/Pages/PageMain.dart';
+import 'package:ship_me/Pages/login-screen.dart';
 import 'package:ship_me/Pages/welcomePage.dart';
 
 FirebaseAuth instance = FirebaseAuth.instance;
@@ -36,15 +39,16 @@ Future<UserCredential> signInWithGoogle() async {
 Future<void> googleLogOut() async {
   await googleSignIn.signOut();
   await instance.signOut();
-  Get.to(WelcomePage());
+  Get.to(LoginScreen());
   print("google log out");
 }
 
-Future<UserCredential> signInWithEmailAndPassword(
-    {String email, String password, String name}) async {
+Future<UserCredential> signUpWithEmailAndPassword(
+    {String email, String password}) async {
   try {
     var result = await instance.createUserWithEmailAndPassword(
         email: email, password: password);
+    print(result.user.email + "is login");
     Get.off(PageMain());
     return result;
   } on FirebaseAuthException catch (e) {
@@ -70,4 +74,29 @@ saveToFirebase(String userID, myMap) {
 
 String currentUser() {
   return instance.currentUser.uid;
+}
+
+Future singIn({String email, String password}) async {
+  try {
+    var instane = await FirebaseAuth.instance
+        .signInWithEmailAndPassword(email: email, password: password);
+    myMessage(
+      title: "Loging",
+      message: "Attendez SVP.....",
+      isPorgress: true,
+    );
+  } on FirebaseAuthException catch (e) {
+    if (e.code == 'user-not-found')
+      myMessage(
+        title: "Alert",
+        message: "Il-a pas un client avec ce email",
+      );
+    if (e.code == 'wrong-password')
+      myMessage(
+        title: "Alert",
+        message: "mot de pass est incorrect",
+      );
+  } catch (e) {
+    print("an error");
+  }
 }

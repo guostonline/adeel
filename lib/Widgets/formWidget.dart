@@ -33,9 +33,10 @@ Widget myCardHeader(
               padding: const EdgeInsets.all(20.0),
               child: DefaultTextStyle(
                 style: GoogleFonts.actor(
-                    fontSize: 16, color: Colors.black, height: 5),
+                  fontSize: 16,
+                  color: Colors.black,
+                ),
                 child: Column(
-                
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     Row(
@@ -45,6 +46,7 @@ Widget myCardHeader(
                         Text(nameClient),
                       ],
                     ),
+                    SizedBox(height: 3),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -52,6 +54,7 @@ Widget myCardHeader(
                         Text(email),
                       ],
                     ),
+                    SizedBox(height: 3),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -59,8 +62,8 @@ Widget myCardHeader(
                         Text(telephone),
                       ],
                     ),
+                    SizedBox(height: 3),
                     Row(
-                      // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(localite + " "),
                         Expanded(child: Divider(color: Colors.black)),

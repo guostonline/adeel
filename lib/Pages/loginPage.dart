@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ship_me/Logics/Auth.dart';
 import 'package:ship_me/Logics/Demande.dart';
+import 'package:ship_me/Logics/SaveInformation.dart';
 import 'package:ship_me/Pages/PageMain.dart';
 import 'package:ship_me/Pages/signup.dart';
 
@@ -86,22 +87,18 @@ class _LoginPageState extends State<LoginPage> {
     return InkWell(
       onTap: () async {
         try {
-          FirebaseAuth.instance.signInWithEmailAndPassword(
-              email: txtEmailController.text.trim(),
-              password: txtPasswordController.text.trim());
+          UserCredential userCredential = await FirebaseAuth.instance
+              .signInWithEmailAndPassword(
+                  email: txtEmailController.text,
+                  password: txtPasswordController.text);
         } on FirebaseAuthException catch (e) {
           if (e.code == 'user-not-found') {
-            Get.snackbar("Alert", "utilisateur non trouver!");
+            print('No user found for that email.');
           } else if (e.code == 'wrong-password') {
-            Get.snackbar("Alert", "mot de pass incorrect");
-          } else if (e.code == 'invalid-email') {
-            Get.snackbar(
-              "Alert",
-              "Email incorrect",
-            );
+            print('Wrong password provided for that user.');
           }
         } catch (e) {
-          Get.snackbar("Alert", "Vérifier la connexion");
+          print(e.message);
         }
       },
       child: Container(
@@ -164,10 +161,13 @@ class _LoginPageState extends State<LoginPage> {
 
   Widget _facebookButton() {
     return InkWell(
-        onTap: ()  {
-           signInWithGoogle().then(
-            (value) => Get.to((PageMain)),
-          );
+        onTap: () {
+          signInWithGoogle().then((value) {
+            saveInforamtion(value.user.displayName, value.user.email,
+                value.user.phoneNumber, value.user.photoURL);
+
+            Get.to((PageMain));
+          });
           //  if (_controller.isLoginGoogle.value=true) Get.to(PageMain());
         },
         child: Container(

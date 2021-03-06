@@ -57,13 +57,11 @@ Widget autoComplete(
         key: null,
         clearOnSubmit: false,
         decoration: InputDecoration(
-            focusedBorder: OutlineInputBorder(
-              borderSide: const BorderSide(color: Colors.red, width: 2.0),
-              borderRadius: BorderRadius.circular(25.0),
-            ),
-            border: InputBorder.none,
-            fillColor: Color(0xfff3f3f4),
-            filled: true),
+          fillColor: Colors.red,
+          border: new OutlineInputBorder(
+              borderRadius: BorderRadius.circular(15),
+              borderSide: new BorderSide(color: Colors.orange)),
+        ),
         suggestions: ville,
         itemBuilder: (context, item) => Container(
           padding: EdgeInsets.all(15),

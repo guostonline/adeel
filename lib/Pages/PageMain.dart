@@ -34,6 +34,7 @@ class _PageMainState extends State<PageMain> {
 
   @override
   Widget build(BuildContext context) {
+    var height = MediaQuery.of(context).size.height;
     return Scaffold(
       body: SingleChildScrollView(
         child: BackdropFilter(
@@ -44,21 +45,33 @@ class _PageMainState extends State<PageMain> {
             decoration: BoxDecoration(
                 color: Colors.black.withOpacity(0),
                 image: DecorationImage(
-                  image: AssetImage("images/background.jpg"),
+                  image: AssetImage("images/background2.jpg"),
                   fit: BoxFit.fill,
                 )),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 SizedBox(height: 80),
-                Container(
-                    alignment: Alignment.centerLeft,
-                    child: IconButton(
-                        icon: (Icon(Icons.logout)),
-                        onPressed: () => googleLogOut())),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    IconButton(
+                        icon: Icon(Icons.logout),
+                        onPressed: () {
+                          instance.signOut();
+                          googleLogOut();
+                        }),
+                    CircleAvatar(
+                      backgroundImage:
+                          NetworkImage(_controller.userPhoto.value),
+                    ),
+                  ],
+                ),
+                Divider(color: Colors.black),
+                SizedBox(height: 40),
                 AutoSizeText(
                   "Choisir votre destination.",
-                  style: GoogleFonts.abel(fontSize: 30),
+                  style: GoogleFonts.roboto(fontSize: 30),
                 ),
                 SizedBox(height: 60),
                 autoComplete(context, txtDeController, "Ville de départ"),
@@ -75,7 +88,7 @@ class _PageMainState extends State<PageMain> {
                   onPressed: () {
                     if (txtDeController.text.isEmpty ||
                         txtVersController.text.isEmpty)
-                      Get.snackbar("Alert", "Veuillez remplir le formulaire");
+                      Get.snackbar("Alert", "Veuillez remplir tout les champs");
                     else {
                       _changeAligment();
                       Timer(Duration(seconds: 2), () {
@@ -90,7 +103,8 @@ class _PageMainState extends State<PageMain> {
                     style: GoogleFonts.abel(color: Colors.white, fontSize: 20),
                   ),
                 ),
-                SizedBox(height: 20),
+
+                //SizedBox(height: height / 10),
               ],
             ),
           ),

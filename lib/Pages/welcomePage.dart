@@ -4,10 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:ship_me/Logics/Demande.dart';
-import 'package:ship_me/Logics/SaveInformation.dart';
 import 'package:ship_me/Pages/PageMain.dart';
 import 'package:ship_me/Pages/loginPage.dart';
 import 'package:ship_me/Pages/signup.dart';
+
+import 'login-screen.dart';
 
 class WelcomePage extends StatefulWidget {
   WelcomePage({Key key, this.title}) : super(key: key);
@@ -29,7 +30,7 @@ class _WelcomePageState extends State<WelcomePage> {
 
     instance.authStateChanges().listen((User user) {
       if (user.uid != null) {
-        Get.to(PageMain());
+        Get.to(LoginScreen());
         
 
       } else if (_controller.isLoginGoogle.value == true)
