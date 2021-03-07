@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:ship_me/Logics/Demande.dart';
 import 'package:ship_me/Logics/MyMessage.dart';
@@ -12,6 +13,7 @@ import 'package:ship_me/Pages/login-screen.dart';
 FirebaseAuth instance = FirebaseAuth.instance;
 FirebaseFirestore ds = FirebaseFirestore.instance;
 GoogleSignIn googleSignIn = GoogleSignIn();
+final myLocaleStorage = GetStorage();
 
 Future<UserCredential> signInWithGoogle() async {
   final GoogleSignInAccount googleUser = await GoogleSignIn().signIn();
@@ -43,12 +45,19 @@ Future<void> googleLogOut() async {
 }
 
 Future<UserCredential> signUpWithEmailAndPassword(
-    {String email, String password}) async {
+    {String email, String password, String name, numberPhone}) async {
   try {
-    var result = await instance.createUserWithEmailAndPassword(
-        email: email, password: password);
+    var result = await instance
+        .createUserWithEmailAndPassword(email: email.trim(), password: password)
+        .then((value) {
+      instance.currentUser.updateProfile(displayName: name.trim());
+      instance.currentUser.updatePhoneNumber(numberPhone);
+      instance.currentUser.updateProfile(
 
-    Get.off(PageMain());
+      );
+    });
+
+    print("chakib login");
     return result;
   } on FirebaseAuthException catch (e) {
     if (e.message == "The email address is badly formatted.")
@@ -67,19 +76,33 @@ Future<UserCredential> signUpWithEmailAndPassword(
   return null;
 }
 
-saveToFirebase(String userID, myMap) {
-  ds.collection("users").doc(userID).set(myMap);
+saveToFirebase({String userID, String name, String email, String telephone}) {
+  ds.collection("users").doc(userID).set({
+    "name": name.trim(),
+    "email": email.trim(),
+    "telephone": telephone.trim()
+  });
+  myLocaleStorage.write("name", name.trim());
+  myLocaleStorage.write("email", email.trim());
+  myLocaleStorage.write("telephone", telephone.trim());
 }
 
 String currentUser() {
   return instance.currentUser.uid;
 }
 
-Future singIn({String email, String password}) async {
+void singIn({String email, String password, String name}) async {
   try {
     var instane = await FirebaseAuth.instance
-        .signInWithEmailAndPassword(email: email, password: password);
-
+        .signInWithEmailAndPassword(
+      email: email,
+      password: password,
+    )
+        .then((value) {
+      value.user.updateProfile(displayName: name);
+      myLocaleStorage.write("email", value.user.email);
+     
+    });
   } on FirebaseAuthException catch (e) {
     if (e.code == 'user-not-found')
       myMessage(
@@ -94,4 +117,9 @@ Future singIn({String email, String password}) async {
   } catch (e) {
     print("an error");
   }
+}
+
+void passWordForgot(String email) async {
+  instance.sendPasswordResetEmail(email: email).then((_) => myMessage(
+      title: "Email bien envoyer ", message: "Vérifier votre boite email "));
 }

@@ -3,9 +3,17 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+import 'package:ship_me/Logics/Auth.dart';
+import 'package:ship_me/Logics/MyMessage.dart';
 import '../pallete.dart';
 import '../widgets/widgets.dart';
 import 'login-screen.dart';
+
+TextEditingController _txtNameController = TextEditingController();
+TextEditingController _txtEmailController = TextEditingController();
+TextEditingController _txtTelephoneController = TextEditingController();
+TextEditingController _txtPassWordController1 = TextEditingController();
+TextEditingController _txtPassWordController2 = TextEditingController();
 
 class CreateNewAccount extends StatelessWidget {
   @override
@@ -67,23 +75,34 @@ class CreateNewAccount extends StatelessWidget {
                 Column(
                   children: [
                     TextInputField(
+                      controller: _txtNameController,
                       icon: FontAwesomeIcons.user,
                       hint: 'User',
                       inputType: TextInputType.name,
                       inputAction: TextInputAction.next,
                     ),
                     TextInputField(
+                      controller: _txtEmailController,
                       icon: FontAwesomeIcons.envelope,
                       hint: 'Email',
                       inputType: TextInputType.emailAddress,
                       inputAction: TextInputAction.next,
                     ),
+                    TextInputField(
+                      controller: _txtTelephoneController,
+                      icon: FontAwesomeIcons.phone,
+                      hint: 'Téléphone',
+                      inputType: TextInputType.number,
+                      inputAction: TextInputAction.next,
+                    ),
                     PasswordInput(
+                      controller: _txtPassWordController1,
                       icon: FontAwesomeIcons.lock,
                       hint: 'Password',
                       inputAction: TextInputAction.next,
                     ),
                     PasswordInput(
+                      controller: _txtPassWordController2,
                       icon: FontAwesomeIcons.lock,
                       hint: 'Confirm Password',
                       inputAction: TextInputAction.done,
@@ -91,7 +110,24 @@ class CreateNewAccount extends StatelessWidget {
                     SizedBox(
                       height: 25,
                     ),
-                    RoundedButton(buttonName: 'Register'),
+                    RoundedButton(
+                        isGoogle: false,
+                        buttonName: 'Enregistre',
+                        myFunction: () {
+                          signUpWithEmailAndPassword(
+                            email: _txtEmailController.text.trim(),
+                            password: _txtPassWordController1.text.trim(),
+                            name: _txtNameController.text,
+                            numberPhone: _txtTelephoneController.text,
+                          ).then((value) => {
+                                saveToFirebase(
+                                       userID: value.user.uid,
+                                      name: _txtNameController.text,
+                                      email: _txtEmailController.text,
+                                      telephone:_txtTelephoneController.text,
+                                    )
+                              });
+                        }),
                     SizedBox(
                       height: 30,
                     ),
@@ -103,7 +139,7 @@ class CreateNewAccount extends StatelessWidget {
                           style: kBodyText,
                         ),
                         GestureDetector(
-                          onTap: () =>Get.to(LoginScreen()),
+                          onTap: () => Get.to(LoginScreen()),
                           child: Text(
                             'Login',
                             style: kBodyText.copyWith(

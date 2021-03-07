@@ -60,9 +60,15 @@ class _PageMainState extends State<PageMain> {
                           instance.signOut();
                           googleLogOut();
                         }),
+                    Text(
+                      instance.currentUser.displayName,
+                      style: TextStyle(fontSize: 20 ),
+                    ),
                     CircleAvatar(
                       backgroundImage:
-                          NetworkImage(_controller.userPhoto.value),
+                          _controller.userPhoto.value == "images/user.png"
+                              ? AssetImage("images/user.png")
+                              : NetworkImage(_controller.userPhoto.value),
                     ),
                   ],
                 ),

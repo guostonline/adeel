@@ -17,8 +17,7 @@ class Demande extends GetxController {
   RxString userName = "".obs;
   RxString userEmail = "".obs;
   RxString userTelephone = "".obs;
-  RxString userPhoto = "".obs;
-
+  RxString userPhoto = "images/user.png".obs;
 
   //TextField focus variables
   RxBool txtFieldDe = false.obs;

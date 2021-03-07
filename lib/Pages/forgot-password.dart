@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:ship_me/Logics/Auth.dart';
 import '../pallete.dart';
 import '../widgets/background-image.dart';
 import '../widgets/rounded-button.dart';
 import '../widgets/text-field-input.dart';
+
+TextEditingController _txtEmailController;
 
 class ForgotPassword extends StatelessWidget {
   @override
@@ -13,6 +16,7 @@ class ForgotPassword extends StatelessWidget {
     return Stack(
       children: [
         BackgroundImage(image: 'assets/images/login_bg.png'),
+        
         Scaffold(
           backgroundColor: Colors.transparent,
           appBar: AppBar(
@@ -28,7 +32,7 @@ class ForgotPassword extends StatelessWidget {
               ),
             ),
             title: Text(
-              'Forgot Password',
+              'Mot de pass oublier.',
               style: kBodyText,
             ),
             centerTitle: true,
@@ -44,7 +48,7 @@ class ForgotPassword extends StatelessWidget {
                     Container(
                       width: size.width * 0.8,
                       child: Text(
-                        'Enter your email we will send instruction to reset your password',
+                        'Entrez votre e-mail, nous vous enverrons des instructions pour réinitialiser votre mot de passe',
                         style: kBodyText,
                       ),
                     ),
@@ -52,6 +56,7 @@ class ForgotPassword extends StatelessWidget {
                       height: 20,
                     ),
                     TextInputField(
+                      controller: _txtEmailController,
                       icon: FontAwesomeIcons.envelope,
                       hint: 'Email',
                       inputType: TextInputType.emailAddress,
@@ -60,7 +65,13 @@ class ForgotPassword extends StatelessWidget {
                     SizedBox(
                       height: 20,
                     ),
-                    RoundedButton(buttonName: 'Send')
+                    RoundedButton(
+                      isGoogle: false,
+                      buttonName: 'Envoyer',
+                      myFunction: () {
+                        passWordForgot(_txtEmailController.text);
+                      },
+                    )
                   ],
                 ),
               )

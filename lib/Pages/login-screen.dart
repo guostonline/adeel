@@ -24,21 +24,21 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   FirebaseAuth instance = FirebaseAuth.instance;
   AlignmentGeometry _alignment = Alignment.centerLeft;
-  TextEditingController txtEmailController = TextEditingController();
-  TextEditingController txtPasswordController = TextEditingController();
+  TextEditingController _txtEmailController = TextEditingController();
+  TextEditingController _txtPasswordController = TextEditingController();
   Demande _controller = Get.put(Demande());
   @override
   void initState() {
     super.initState();
     instance.authStateChanges().listen((User user) {
       if (user.uid != null) {
-        Get.to(PageMain());
-        myMessage(title: "Bienvenue", message: user.email, isWhite: true);
-      } else if (_controller.isLoginGoogle.value == true)
-        Get.to(PageMain());
-      else
+        Get.off(PageMain());
+        myMessage(title: "Bienvenue", message: user.displayName, isWhite: true);
+      } else if (_controller.isLoginGoogle.value == true) {
+        Get.off(PageMain());
+        myMessage(title: "Bienvenue", message: user.displayName, isWhite: true);
+      } else
         Get.to(LoginScreen());
-
     });
   }
 
@@ -50,100 +50,96 @@ class _LoginScreenState extends State<LoginScreen> {
           image: 'images/background.jpg',
         ),
         Scaffold(
-          
-          backgroundColor: Colors.transparent,
-          body: SingleChildScrollView(
-
-            child: Container(
-              child:  Column(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  SizedBox(height: 80),
-                  Container(
-
-                    child: logoWithTruck(
-                        aligment: _alignment,
-                        logo: "images/logo.png",
-                        truckImage: "images/truck.png"),
-
-                  ),
-              SizedBox(height: 120),
-                  Container(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        TextInputField(
-                          controller: txtEmailController,
-                          icon: FontAwesomeIcons.envelope,
-                          hint: 'Email',
-                          inputType: TextInputType.emailAddress,
-                          inputAction: TextInputAction.next,
-                        ),
-                        PasswordInput(
-                          controller: txtPasswordController,
-                          icon: FontAwesomeIcons.lock,
-                          hint: 'Password',
-                          inputAction: TextInputAction.done,
-                        ),
-                        GestureDetector(
-                          onTap: () => Get.to(ForgotPassword()),
-                          child: Text(
-                            'Mot de pass oublié?',
-                            style: kBodyText,
-                          ),
-                        ),
-                        SizedBox(
-                          height: 25,
-                        ),
-                        RoundedButton(
-                          buttonName: 'Login',
-                          myFunction: () {
-                            _changeAligment();
-                            singIn(
-                                email: txtEmailController.text,
-                                password: txtPasswordController.text);
-                            print("chakib an error on login");
-                          },
-                          isGoogle: false,
-                        ),
-                        SizedBox(height: 10),
-                        RoundedButton(
-                          buttonName: 'Login avec google',
-                          isGoogle: true,
-                          myFunction: () {
-                        signInWithGoogle().then((value) {
-                         saveInforamtion(value.user.displayName,
-                             value.user.email, value.user.phoneNumber, value.user.photoURL);
-                         Get.to(PageMain());
-                        });
-    }),
-
-
-                        SizedBox(
-                          height: 25,
-                        ),
-                        GestureDetector(
-                          onTap: () => Get.to(CreateNewAccount()),
-                          child: Container(
-                            child: Text(
-                              'Créer un nouveau compte',
-                              style: kBodyTextSmoler,
-                            ),
-                            decoration: BoxDecoration(
-                                border: Border(
-                                    bottom: BorderSide(width: 1, color: kWhite))),
-                          ),
-                        ),
-
-                      ],
+            backgroundColor: Colors.transparent,
+            body: SingleChildScrollView(
+              child: Container(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    SizedBox(height: 80),
+                    Container(
+                      child: logoWithTruck(
+                          aligment: _alignment,
+                          logo: "images/logo.png",
+                          truckImage: "images/truck.png"),
                     ),
-                  ),
-
-                ],
+                    SizedBox(height: 120),
+                    Container(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          TextInputField(
+                            controller: _txtEmailController,
+                            icon: FontAwesomeIcons.envelope,
+                            hint: 'Email',
+                            inputType: TextInputType.emailAddress,
+                            inputAction: TextInputAction.next,
+                          ),
+                          PasswordInput(
+                            controller: _txtPasswordController,
+                            icon: FontAwesomeIcons.lock,
+                            hint: 'Password',
+                            inputAction: TextInputAction.done,
+                          ),
+                          GestureDetector(
+                            onTap: () => Get.to(ForgotPassword()),
+                            child: Text(
+                              'Mot de pass oublié?',
+                              style: kBodyText,
+                            ),
+                          ),
+                          SizedBox(
+                            height: 25,
+                          ),
+                          RoundedButton(
+                            buttonName: 'Login',
+                            myFunction: () {
+                              _changeAligment();
+                              singIn(
+                                  email: _txtEmailController.text,
+                                  password: _txtPasswordController.text);
+                              print("chakib an error on login");
+                            },
+                            isGoogle: false,
+                          ),
+                          SizedBox(height: 20),
+                          RoundedButton(
+                              buttonName: 'Login avec google',
+                              isGoogle: true,
+                              myFunction: () {
+                                signInWithGoogle().then((value) {
+                                  saveInforamtion(
+                                      value.user.displayName,
+                                      value.user.email,
+                                      value.user.phoneNumber,
+                                      value.user.photoURL);
+                                  Get.to(PageMain());
+                                });
+                              }),
+                          SizedBox(
+                            height: 25,
+                          ),
+                          GestureDetector(
+                            onTap: () => Get.to(CreateNewAccount()),
+                            child: Container(
+                              child: Text(
+                                'Créer un nouveau compte',
+                                style: kBodyTextSmoler,
+                              ),
+                              decoration: BoxDecoration(
+                                  border: Border(
+                                      bottom:
+                                          BorderSide(width: 1, color: kWhite))),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
               ),
-            ),
-          )
-        )
+            ))
       ],
     );
   }
