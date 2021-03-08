@@ -4,6 +4,8 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:ship_me/Logics/Auth.dart';
 import 'package:ship_me/Logics/Demande.dart';
+import 'package:ship_me/Logics/Validation.dart';
+import 'package:ship_me/Pages/readyToSend.dart';
 import 'package:ship_me/Widgets/formWidget.dart';
 
 class InformationPage extends StatefulWidget {
@@ -13,6 +15,8 @@ class InformationPage extends StatefulWidget {
 
 final myLocaleStorage = GetStorage();
 Demande _controller = Get.put(Demande());
+TextEditingController txtProduiController;
+TextEditingController txtPoidsController;
 
 class _InformationPageState extends State<InformationPage> {
   @override
@@ -35,16 +39,21 @@ class _InformationPageState extends State<InformationPage> {
                   myCardHeader(
                       nameClient: instance.currentUser.displayName,
                       email: instance.currentUser.email,
-                      telephone: instance.currentUser.phoneNumber == null
-                          ? "Pas de téléphone"
-                          : instance.currentUser.phoneNumber.toString(),
+                      telephone: Validation.testTelephone(),
                       localite: _controller.localite.value,
                       destination: _controller.destination.value,
                       title: "Inforamtions Client"),
                   SizedBox(height: 20),
-                  categorie(),
+                  categorie(
+                    controllerPoids: txtPoidsController,
+                    controllerProduit: txtProduiController,
+                  ),
                   SizedBox(height: 20),
                   disponibilite(context),
+                  ElevatedButton(
+                    onPressed: () => Get.to(ReadyToSend()),
+                    child: Text("Dernier étap"),
+                  )
                 ],
               ),
             ),

@@ -47,70 +47,75 @@ class _PageMainState extends State<PageMain> {
                   image: AssetImage("images/background3.jpg"),
                   fit: BoxFit.fill,
                 )),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                SizedBox(height: 80),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    IconButton(
-                        icon: Icon(Icons.logout),
-                        onPressed: () {
-                          instance.signOut();
-                          googleLogOut();
-                        }),
-                    Text(
-                      instance.currentUser.displayName,
-                      style: TextStyle(fontSize: 20 ),
-                    ),
-                    CircleAvatar(
-                      backgroundImage:
-                          _controller.userPhoto.value == "images/user.png"
-                              ? AssetImage("images/user.png")
-                              : NetworkImage(_controller.userPhoto.value),
-                    ),
-                  ],
-                ),
-                Divider(color: Colors.black),
-                SizedBox(height: 40),
-                AutoSizeText(
-                  "Choisir votre destination.",
-                  style: GoogleFonts.roboto(fontSize: 30),
-                ),
-                SizedBox(height: 60),
-                autoComplete(context, txtDeController, "Ville de départ"),
-                SizedBox(height: 30),
-                autoComplete(context, txtVersController, "Ville de livraison"),
-                SizedBox(height: 30),
-                _truckAnimation(),
-                Spacer(),
-                RaisedButton(
-                  color: Color(0xff0092CC),
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(18.0),
-                      side: BorderSide(color: Colors.white)),
-                  onPressed: () {
-                    if (txtDeController.text.isEmpty ||
-                        txtVersController.text.isEmpty)
-                      Get.snackbar("Alert", "Veuillez remplir tout les champs");
-                    else {
-                      _changeAligment();
-                      Timer(Duration(seconds: 2), () {
-                        Get.to(InformationPage());
-                      });
-                    }
-                    _controller.localite.value = txtDeController.text;
-                    _controller.destination.value = txtVersController.text;
-                  },
-                  child: Text(
-                    "Suivant",
-                    style: GoogleFonts.abel(color: Colors.white, fontSize: 20),
+            child: Obx(
+              () => Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SizedBox(height: 80),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      IconButton(
+                          icon: Icon(Icons.logout),
+                          onPressed: () {
+                            instance.signOut();
+                            googleLogOut();
+                          }),
+                      Text(
+                        _controller.userName.value!=null? _controller.userName.value:"",
+                        style: TextStyle(fontSize: 20),
+                      ),
+                      CircleAvatar(
+                        backgroundImage:
+                            _controller.userPhoto.value == "images/user.png"
+                                ? AssetImage("images/user.png")
+                                : NetworkImage(_controller.userPhoto.value),
+                      ),
+                    ],
                   ),
-                ),
+                  Divider(color: Colors.black),
+                  SizedBox(height: 40),
+                  AutoSizeText(
+                    "Choisir votre destination.",
+                    style: GoogleFonts.roboto(fontSize: 30),
+                  ),
+                  SizedBox(height: 60),
+                  autoComplete(context, txtDeController, "Ville de départ"),
+                  SizedBox(height: 30),
+                  autoComplete(
+                      context, txtVersController, "Ville de livraison"),
+                  SizedBox(height: 30),
+                  _truckAnimation(),
+                  Spacer(),
+                  RaisedButton(
+                    color: Color(0xff0092CC),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(18.0),
+                        side: BorderSide(color: Colors.white)),
+                    onPressed: () {
+                      if (txtDeController.text.isEmpty ||
+                          txtVersController.text.isEmpty)
+                        Get.snackbar(
+                            "Alert", "Veuillez remplir tout les champs");
+                      else {
+                        _changeAligment();
+                        Timer(Duration(seconds: 2), () {
+                          Get.to(InformationPage());
+                        });
+                      }
+                      _controller.localite.value = txtDeController.text;
+                      _controller.destination.value = txtVersController.text;
+                    },
+                    child: Text(
+                      "Suivant",
+                      style:
+                          GoogleFonts.abel(color: Colors.white, fontSize: 20),
+                    ),
+                  ),
 
-                //SizedBox(height: height / 10),
-              ],
+                  //SizedBox(height: height / 10),
+                ],
+              ),
             ),
           ),
         ),

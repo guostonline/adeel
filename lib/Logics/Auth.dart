@@ -14,6 +14,7 @@ FirebaseAuth instance = FirebaseAuth.instance;
 FirebaseFirestore ds = FirebaseFirestore.instance;
 GoogleSignIn googleSignIn = GoogleSignIn();
 final myLocaleStorage = GetStorage();
+Demande _controller = Get.put(Demande());
 
 Future<UserCredential> signInWithGoogle() async {
   final GoogleSignInAccount googleUser = await GoogleSignIn().signIn();
@@ -45,16 +46,17 @@ Future<void> googleLogOut() async {
 }
 
 Future<UserCredential> signUpWithEmailAndPassword(
-    {String email, String password, String name, numberPhone}) async {
+    {String email, String password, String name, String numberPhone}) async {
   try {
     var result = await instance
         .createUserWithEmailAndPassword(email: email.trim(), password: password)
-        .then((value) {
-      instance.currentUser.updateProfile(displayName: name.trim());
-      instance.currentUser.updatePhoneNumber(numberPhone);
-      instance.currentUser.updateProfile(
+        .then((value) async {
+      await instance.currentUser.updateProfile(displayName: name.trim());
 
-      );
+      _controller.userEmail.value = instance.currentUser.email;
+      _controller.userName.value = instance.currentUser.displayName;
+      myLocaleStorage.write("telephone", numberPhone);
+      
     });
 
     print("chakib login");
@@ -93,6 +95,8 @@ String currentUser() {
 
 void singIn({String email, String password, String name}) async {
   try {
+    _controller.userName.value = name;
+    _controller.userEmail.value = email;
     var instane = await FirebaseAuth.instance
         .signInWithEmailAndPassword(
       email: email,
@@ -101,7 +105,6 @@ void singIn({String email, String password, String name}) async {
         .then((value) {
       value.user.updateProfile(displayName: name);
       myLocaleStorage.write("email", value.user.email);
-     
     });
   } on FirebaseAuthException catch (e) {
     if (e.code == 'user-not-found')

@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:ship_me/Logics/Auth.dart';
 import 'package:ship_me/Logics/Demande.dart';
 import 'package:ship_me/Logics/MyMessage.dart';
@@ -27,16 +28,21 @@ class _LoginScreenState extends State<LoginScreen> {
   TextEditingController _txtEmailController = TextEditingController();
   TextEditingController _txtPasswordController = TextEditingController();
   Demande _controller = Get.put(Demande());
+  final myLocaleStorage = GetStorage();
   @override
   void initState() {
     super.initState();
+    _controller.userTelephone.value = myLocaleStorage.read("telephone");
     instance.authStateChanges().listen((User user) {
       if (user.uid != null) {
         Get.off(PageMain());
-        myMessage(title: "Bienvenue", message: user.displayName, isWhite: true);
+        myMessage(
+            title: "Bienvenue", message: user.displayName, isWhite: false);
+        _controller.userName.value = user.displayName;
       } else if (_controller.isLoginGoogle.value == true) {
         Get.off(PageMain());
-        myMessage(title: "Bienvenue", message: user.displayName, isWhite: true);
+        myMessage(
+            title: "Bienvenue", message: user.displayName, isWhite: false);
       } else
         Get.to(LoginScreen());
     });
@@ -108,7 +114,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               buttonName: 'Login avec google',
                               isGoogle: true,
                               myFunction: () {
-                                signInWithGoogle().then((value) {
+                                signInWithGoogle().then((value) async {
                                   saveInforamtion(
                                       value.user.displayName,
                                       value.user.email,

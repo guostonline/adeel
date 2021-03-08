@@ -136,7 +136,7 @@ Widget disponibilite(
   );
 }
 
-Widget categorie() {
+Widget categorie({@required TextEditingController controllerProduit,@required TextEditingController controllerPoids}) {
   return Container(
     child: Obx(
       () => Column(
@@ -192,6 +192,8 @@ Widget categorie() {
                         children: [
                           Flexible(
                             child: TextField(
+                              onChanged: (value)=>_controller.numberOfProduit.value=int.parse(value),
+                              controller:controllerProduit ,
                               decoration: InputDecoration(
                                   suffixText: "Unités",
                                   labelText: "Nombre de produit"),
@@ -201,6 +203,8 @@ Widget categorie() {
                           SizedBox(width: 30),
                           Flexible(
                             child: TextField(
+                              controller: controllerPoids,
+                              onChanged: (value)=>_controller.totalweight.value=int.parse(value),
                               decoration: InputDecoration(
                                   suffixText: "Kg", labelText: "Poids total"),
                               keyboardType: TextInputType.number,
