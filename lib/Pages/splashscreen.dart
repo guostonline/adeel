@@ -38,11 +38,8 @@ class SplachSceen extends StatelessWidget {
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20),
               ),
-              child: RaisedButton(
-                color: Color(0xff0092CC),
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(18.0),
-                    side: BorderSide(color: Colors.white)),
+              child: ElevatedButton(
+                
                 onPressed: () =>Get.to(PageMain()),
                 child: Text(
                   "Entree",

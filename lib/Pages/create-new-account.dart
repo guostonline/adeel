@@ -5,6 +5,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:ship_me/Logics/Auth.dart';
 import 'package:ship_me/Logics/MyMessage.dart';
+
 import '../pallete.dart';
 import '../widgets/widgets.dart';
 import 'login-screen.dart';
@@ -114,19 +115,47 @@ class CreateNewAccount extends StatelessWidget {
                         isGoogle: false,
                         buttonName: 'Enregistre',
                         myFunction: () {
-                          signUpWithEmailAndPassword(
-                            email: _txtEmailController.text.trim(),
-                            password: _txtPassWordController1.text.trim(),
-                            name: _txtNameController.text,
-                            numberPhone: _txtTelephoneController.text,
-                          ).then((value) => {
-                                saveToFirebase(
-                                       userID: value.user.uid,
-                                      name: _txtNameController.text,
-                                      email: _txtEmailController.text,
-                                      telephone:_txtTelephoneController.text,
-                                    )
-                              });
+                          if (!_txtTelephoneController.text.isNumericOnly) {
+                            myMessage(
+                                title: "Alert",
+                                message:
+                                    "Entree un valide numèro de téléphone");
+                          } else if (_txtTelephoneController.text.isEmpty) {
+                            myMessage(
+                                title: "Alert",
+                                message:
+                                    "Le numére de téléphone est obligatoire");
+                          } else if (_txtPassWordController1.text !=
+                              _txtPassWordController2.text) {
+                            myMessage(
+                                title: "Alert",
+                                message: "Le password ne correspond pas");
+                          } else if (_txtPassWordController1.text.isEmpty ||
+                              _txtPassWordController2.text.isEmpty) {
+                            myMessage(
+                                title: "Alert",
+                                message:
+                                    "Remplire les deux champs de password ");
+                          } else if (_txtNameController.text.isEmpty) {
+                            myMessage(
+                                title: "Alert",
+                                message:
+                                    "Veulliez entree votre nom et prènom ou entreprise");
+                          } else {
+                            signUpWithEmailAndPassword(
+                              email: _txtEmailController.text,
+                              password: _txtPassWordController1.text,
+                              name: _txtNameController.text,
+                              numberPhone: _txtTelephoneController.text,
+                            ).then((value) => {
+                                  saveToFirebase(
+                                    userID: value.user.uid,
+                                    name: _txtNameController.text,
+                                    email: _txtEmailController.text,
+                                    telephone: _txtTelephoneController.text,
+                                  )
+                                });
+                          }
                         }),
                     SizedBox(
                       height: 30,
@@ -147,10 +176,7 @@ class CreateNewAccount extends StatelessWidget {
                           ),
                         ),
                       ],
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
+                    )
                   ],
                 )
               ],

@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:ship_me/Logics/Demande.dart';
-import 'package:ship_me/Logics/MyMessage.dart';
 import 'package:ship_me/Logics/SendEmail.dart';
 import 'package:ship_me/Pages/InformationPage.dart';
 
@@ -45,23 +44,8 @@ class ReadyToSend extends StatelessWidget {
                 child: Text("Modifier"),
               ),
               ElevatedButton(
-                onPressed: () {
-                  sendMeMail(
-                    body:
-                        """Nom : ${_controller.userName.value} Email : ${_controller.userEmail.value} Téléphone : ${_controller.userTelephone.value} n/ 
-                    Categorie : ${_controller.categorie.value}. n/
-                    Nombre de produits : ${_controller.numberOfProduit.value}. Total Poids : ${_controller.totalweight.value}
-                    Ville de départ : ${_controller.localite.value} ----------> ${_controller.destination.value}
-                    Date de : ${_controller.dateDesLe.value} ----------> ${_controller.dateJusqua.value}
-                    """,
-                    suject:
-                        "Un nouveau demande de ${_controller.userEmail.value}",
-                    recipients: "guostonline@gmail.com",
-                  ).then((value) => myMessage(
-                      title: "Information",
-                      message: "Votre demande est bien envoyer",
-                      isWhite: false));
-                },
+                onPressed: () =>sendEmail(),
+
                 child: Text("Envoyer"),
               ),
             ],

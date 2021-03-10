@@ -18,3 +18,11 @@
                     _controller.isCategorieSelect(true);
                   },
                 ),
+
+
+                 """Nom : ${_controller.userName.value} Email : ${_controller.userEmail.value} Téléphone : ${_controller.userTelephone.value} n/ 
+                    Categorie : ${_controller.categorie.value}. n/
+                    Nombre de produits : ${_controller.numberOfProduit.value}. Total Poids : ${_controller.totalweight.value}
+                    Ville de départ : ${_controller.localite.value} ----------> ${_controller.destination.value}
+                    Date de : ${_controller.dateDesLe.value} ----------> ${_controller.dateJusqua.value}
+                    """

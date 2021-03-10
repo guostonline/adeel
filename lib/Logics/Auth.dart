@@ -1,13 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/widgets.dart';
+
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:ship_me/Logics/Demande.dart';
 import 'package:ship_me/Logics/MyMessage.dart';
-import 'package:ship_me/Pages/PageMain.dart';
+import 'package:ship_me/Logics/SaveInformation.dart';
+
 import 'package:ship_me/Pages/login-screen.dart';
 
 FirebaseAuth instance = FirebaseAuth.instance;
@@ -53,10 +53,12 @@ Future<UserCredential> signUpWithEmailAndPassword(
         .then((value) async {
       await instance.currentUser.updateProfile(displayName: name.trim());
 
-      _controller.userEmail.value = instance.currentUser.email;
-      _controller.userName.value = instance.currentUser.displayName;
-      myLocaleStorage.write("telephone", numberPhone);
-      
+      _controller.userEmail.value = email;
+      _controller.userName.value = name;
+      _controller.userTelephone.value = numberPhone;
+      localDbWrite("telephone", numberPhone);
+      localDbWrite("userName", name);
+      localDbWrite("email", email);
     });
 
     print("chakib login");
@@ -97,7 +99,7 @@ void singIn({String email, String password, String name}) async {
   try {
     _controller.userName.value = name;
     _controller.userEmail.value = email;
-    var instane = await FirebaseAuth.instance
+    FirebaseAuth.instance
         .signInWithEmailAndPassword(
       email: email,
       password: password,
@@ -115,7 +117,8 @@ void singIn({String email, String password, String name}) async {
     if (e.code == 'wrong-password')
       myMessage(
         title: "Alert",
-        message: "mot de pass est incorrect",
+        message:
+            "Mot de passe incorrect. Réessayez ou cliquez sur Mot de passe oublié. pour le réinitialiser.",
       );
   } catch (e) {
     print("an error");

@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ship_me/Constant/Ville.dart';
 import 'package:ship_me/Logics/Demande.dart';
-import '../pallete.dart';
 
 Demande _controller = Get.put(Demande());
 

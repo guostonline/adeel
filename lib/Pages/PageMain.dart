@@ -29,11 +29,11 @@ class _PageMainState extends State<PageMain> {
   @override
   void initState() {
     super.initState();
+    
   }
 
   @override
   Widget build(BuildContext context) {
-    var height = MediaQuery.of(context).size.height;
     return Scaffold(
       body: SingleChildScrollView(
         child: BackdropFilter(
@@ -62,7 +62,9 @@ class _PageMainState extends State<PageMain> {
                             googleLogOut();
                           }),
                       Text(
-                        _controller.userName.value!=null? _controller.userName.value:"",
+                        _controller.userName.value != null
+                            ? _controller.userName.value
+                            : "",
                         style: TextStyle(fontSize: 20),
                       ),
                       CircleAvatar(
@@ -87,11 +89,7 @@ class _PageMainState extends State<PageMain> {
                   SizedBox(height: 30),
                   _truckAnimation(),
                   Spacer(),
-                  RaisedButton(
-                    color: Color(0xff0092CC),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(18.0),
-                        side: BorderSide(color: Colors.white)),
+                  ElevatedButton(
                     onPressed: () {
                       if (txtDeController.text.isEmpty ||
                           txtVersController.text.isEmpty)

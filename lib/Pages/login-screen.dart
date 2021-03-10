@@ -32,13 +32,17 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   void initState() {
     super.initState();
-    _controller.userTelephone.value = myLocaleStorage.read("telephone");
+
+    localRead("email");
+    localRead("telephone");
     instance.authStateChanges().listen((User user) {
       if (user.uid != null) {
         Get.off(PageMain());
         myMessage(
             title: "Bienvenue", message: user.displayName, isWhite: false);
         _controller.userName.value = user.displayName;
+        _controller.userEmail.value = user.email;
+        _controller.userTelephone.value = localRead("telephone");
       } else if (_controller.isLoginGoogle.value == true) {
         Get.off(PageMain());
         myMessage(
@@ -120,6 +124,10 @@ class _LoginScreenState extends State<LoginScreen> {
                                       value.user.email,
                                       value.user.phoneNumber,
                                       value.user.photoURL);
+                                  _controller.userName.value =
+                                      value.user.displayName;
+                                  _controller.userEmail.value =
+                                      value.user.email;
                                   Get.to(PageMain());
                                 });
                               }),

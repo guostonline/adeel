@@ -107,9 +107,11 @@ Widget disponibilite(
                           Text("Disponible dés le :"),
                           Text(_controller.dateDesLe.value),
                           IconButton(
-                            icon: Icon(Icons.date_range),
-                            onPressed: () => selectDate(context),
-                          )
+                              icon: Icon(Icons.date_range),
+                              onPressed: () {
+                                selectDate(context);
+                                FocusScope.of(context).requestFocus();
+                              })
                         ],
                       ),
                       Row(
@@ -118,10 +120,11 @@ Widget disponibilite(
                           Text("Disponible jusqu'à :"),
                           Text(_controller.dateJusqua.value),
                           IconButton(
-                            icon: Icon(Icons.date_range),
-                            onPressed: () =>
-                                selectDate(context, isJusqua: true),
-                          )
+                              icon: Icon(Icons.date_range),
+                              onPressed: () {
+                                selectDate(context, isJusqua: true);
+                                FocusScope.of(context).requestFocus();
+                              })
                         ],
                       ),
                     ],
@@ -136,7 +139,9 @@ Widget disponibilite(
   );
 }
 
-Widget categorie({@required TextEditingController controllerProduit,@required TextEditingController controllerPoids}) {
+Widget categorie(
+    {@required TextEditingController controllerProduit,
+    @required TextEditingController controllerPoids}) {
   return Container(
     child: Obx(
       () => Column(
@@ -155,6 +160,7 @@ Widget categorie({@required TextEditingController controllerProduit,@required Te
                   child: Column(
                     children: [
                       Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
                           Flexible(
                             child: DropdownButton<String>(
@@ -180,10 +186,14 @@ Widget categorie({@required TextEditingController controllerProduit,@required Te
                             ),
                           ),
                           Container(
-                            height: 60,
+                            height: 80,
+                            width: 80,
                             child: CircleAvatar(
-                              backgroundImage:
-                                  AssetImage(_controller.categorieImage.value),
+                              // minRadius: 50,
+                              child: Image.asset(
+                                _controller.categorieImage.value,
+                                fit: BoxFit.cover,
+                              ),
                             ),
                           )
                         ],
@@ -192,8 +202,9 @@ Widget categorie({@required TextEditingController controllerProduit,@required Te
                         children: [
                           Flexible(
                             child: TextField(
-                              onChanged: (value)=>_controller.numberOfProduit.value=int.parse(value),
-                              controller:controllerProduit ,
+                              onChanged: (value) => _controller
+                                  .numberOfProduit.value = int.parse(value),
+                              controller: controllerProduit,
                               decoration: InputDecoration(
                                   suffixText: "Unités",
                                   labelText: "Nombre de produit"),
@@ -204,7 +215,8 @@ Widget categorie({@required TextEditingController controllerProduit,@required Te
                           Flexible(
                             child: TextField(
                               controller: controllerPoids,
-                              onChanged: (value)=>_controller.totalweight.value=int.parse(value),
+                              onChanged: (value) => _controller
+                                  .totalweight.value = int.parse(value),
                               decoration: InputDecoration(
                                   suffixText: "Kg", labelText: "Poids total"),
                               keyboardType: TextInputType.number,

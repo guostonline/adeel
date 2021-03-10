@@ -36,7 +36,7 @@ dependencies:
   font_awesome_flutter: ^8.10.0
   google_sign_in: ^4.5.9
   intl: ^0.16.1
-  flutter_email_sender: ^5.0.0
+  mailer2: ^1.2.5
 
 dev_dependencies:
   flutter_test:
