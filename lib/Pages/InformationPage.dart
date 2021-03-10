@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:ship_me/Logics/Demande.dart';
+import 'package:ship_me/Logics/MyMessage.dart';
 import 'package:ship_me/Pages/readyToSend.dart';
 import 'package:ship_me/Widgets/formWidget.dart';
 
@@ -53,7 +54,22 @@ class _InformationPageState extends State<InformationPage> {
                     SizedBox(height: 20),
                     disponibilite(context),
                     ElevatedButton(
-                      onPressed: () => Get.to(ReadyToSend()),
+                      onPressed: () {
+                        if (txtPoidsController.text.isEmpty ||
+                            txtProduiController.text.isEmpty) {
+                          myMessage(
+                              title: "Alert",
+                              message: "Remplire les deux champ de date",
+                              isWhite: false);
+                        } else if (_controller.categorie.value ==
+                            "Je veux transporter...") {
+                          myMessage(
+                              title: "Alert",
+                              message: "Choisir le categorie de transport!",
+                              isWhite: false);
+                        } else
+                          Get.to(ReadyToSend());
+                      },
                       child: Text("Votre devis dans 30min"),
                     ),
                   ],

@@ -5,13 +5,13 @@ Demande _controller = Get.put(Demande());
 
 selectCategorieImage(String categorie) {
   switch (categorie) {
-    case "Démagements":
+    case "Adeel Déménagement":
       _controller.categorieImage.value = "images/demenagement.jpg";
       break;
     case "Bagages":
       _controller.categorieImage.value = "images/bagage.png";
       break;
-    case "Caisses ou Cartons":
+    case "Transport de Marchandises":
       _controller.categorieImage.value = "images/carton.png";
       break;
     case "Meuble, élétroménager":
@@ -20,7 +20,7 @@ selectCategorieImage(String categorie) {
     case "Palettes":
       _controller.categorieImage.value = "images/palette.png";
       break;
-    case "Colis":
+    case "Livraison Express des Colis":
       _controller.categorieImage.value = "images/coli.png";
       break;
 

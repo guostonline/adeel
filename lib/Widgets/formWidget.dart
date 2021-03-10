@@ -6,6 +6,7 @@ import 'package:ship_me/Constant/myList.dart';
 import 'package:ship_me/Logics/CategorieFunc.dart';
 import 'package:ship_me/Logics/Demande.dart';
 import 'package:ship_me/Logics/TimeFunctions.dart';
+import 'package:ship_me/Pages/CategoriePages/AdeelDemenagement.dart';
 
 Demande _controller = Get.put(Demande());
 
@@ -186,8 +187,8 @@ Widget categorie(
                             ),
                           ),
                           Container(
-                            height: 80,
-                            width: 80,
+                            height: 60,
+                            width: 60,
                             child: CircleAvatar(
                               // minRadius: 50,
                               child: Image.asset(
@@ -198,32 +199,8 @@ Widget categorie(
                           )
                         ],
                       ),
-                      Row(
-                        children: [
-                          Flexible(
-                            child: TextField(
-                              onChanged: (value) => _controller
-                                  .numberOfProduit.value = int.parse(value),
-                              controller: controllerProduit,
-                              decoration: InputDecoration(
-                                  suffixText: "Unités",
-                                  labelText: "Nombre de produit"),
-                              keyboardType: TextInputType.number,
-                            ),
-                          ),
-                          SizedBox(width: 30),
-                          Flexible(
-                            child: TextField(
-                              controller: controllerPoids,
-                              onChanged: (value) => _controller
-                                  .totalweight.value = int.parse(value),
-                              decoration: InputDecoration(
-                                  suffixText: "Kg", labelText: "Poids total"),
-                              keyboardType: TextInputType.number,
-                            ),
-                          ),
-                        ],
-                      ),
+                      SizedBox(height: 15),
+                      AdeelDemenagement()
                     ],
                   ),
                 ),

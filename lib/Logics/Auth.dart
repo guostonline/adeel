@@ -51,13 +51,14 @@ Future<UserCredential> signUpWithEmailAndPassword(
     var result = await instance
         .createUserWithEmailAndPassword(email: email.trim(), password: password)
         .then((value) async {
-      await instance.currentUser.updateProfile(displayName: name.trim());
+      await instance.currentUser
+          .updateProfile(displayName: name.capitalizeFirst.trim());
 
       _controller.userEmail.value = email;
-      _controller.userName.value = name;
+      _controller.userName.value = name.capitalizeFirst.trim();
       _controller.userTelephone.value = numberPhone;
       localDbWrite("telephone", numberPhone);
-      localDbWrite("userName", name);
+      localDbWrite("userName", name.capitalizeFirst.trim());
       localDbWrite("email", email);
     });
 
