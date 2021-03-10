@@ -38,6 +38,7 @@ class _LoginScreenState extends State<LoginScreen> {
     instance.authStateChanges().listen((User user) {
       if (user.uid != null) {
         Get.off(PageMain());
+
         myMessage(
             title: "Bienvenue", message: user.displayName, isWhite: false);
         _controller.userName.value = user.displayName;
@@ -118,6 +119,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               buttonName: 'Login avec google',
                               isGoogle: true,
                               myFunction: () {
+                                _changeAligment();
                                 signInWithGoogle().then((value) async {
                                   saveInforamtion(
                                       value.user.displayName,

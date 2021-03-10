@@ -1,11 +1,14 @@
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
+import 'package:ship_me/Pages/CategoriePages/AdeelDemenagement.dart';
+import 'package:ship_me/Pages/CategoriePages/LivraisonExpress.dart';
+import 'package:ship_me/Pages/CategoriePages/TransportDeMarchandise.dart';
 
 DateTime selectedDate = DateTime.now();
 
 class Demande extends GetxController {
   // Demande information
-  RxString categorie = "".obs;
+  RxString categorie = "Adeel Déménagement".obs;
   RxString localite = "".obs;
   RxString destination = "".obs;
   RxString dateDesLe = "".obs;
@@ -30,7 +33,21 @@ class Demande extends GetxController {
   RxBool txtFieldVers = false.obs;
 
   RxBool isLoginGoogle = false.obs;
-  void isCategorieSelect(bool isDe) {
-    isDe ? txtFieldDe.value = true : txtFieldVers.value = true;
+
+  categorieChange(String categorie) {
+    switch (categorie) {
+      case "Adeel Déménagement":
+        return AdeelDemenagement();
+        break;
+      case "Livraison Express des Colis":
+        return LivraisonExpress();
+        break;
+      case "Transport de Marchandises":
+        return TransportDeMarchandise();
+        break;
+
+      default:
+        return AdeelDemenagement();
+    }
   }
 }

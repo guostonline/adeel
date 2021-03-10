@@ -6,7 +6,6 @@ import 'package:ship_me/Constant/myList.dart';
 import 'package:ship_me/Logics/CategorieFunc.dart';
 import 'package:ship_me/Logics/Demande.dart';
 import 'package:ship_me/Logics/TimeFunctions.dart';
-import 'package:ship_me/Pages/CategoriePages/AdeelDemenagement.dart';
 
 Demande _controller = Get.put(Demande());
 
@@ -173,7 +172,7 @@ Widget categorie(
                               }).toList(),
                               hint: _controller.categorie.value == ""
                                   ? Text(
-                                      "Je veux transporter...",
+                                      "Adeel Déménagement",
                                       style: GoogleFonts.abel(),
                                     )
                                   : Text(_controller.categorie.value,
@@ -181,7 +180,7 @@ Widget categorie(
                               isExpanded: true,
                               onChanged: (value1) {
                                 _controller.categorie.value = value1;
-                                _controller.isCategorieSelect(true);
+
                                 selectCategorieImage(value1);
                               },
                             ),
@@ -200,7 +199,7 @@ Widget categorie(
                         ],
                       ),
                       SizedBox(height: 15),
-                      AdeelDemenagement()
+                      _controller.categorieChange(_controller.categorie.value),
                     ],
                   ),
                 ),

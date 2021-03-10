@@ -1,6 +1,4 @@
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:ship_me/Logics/Demande.dart';
 import 'package:flutter_switch/flutter_switch.dart';
@@ -24,6 +22,7 @@ class AdeelDemenagement extends StatelessWidget {
                 children: [
                   Text("Chargement - Déchargement : "),
                   FlutterSwitch(
+                    showOnOff: true,
                     inactiveColor: Colors.grey,
                     activeColor: Colors.green,
                     onToggle: (bool value) {
@@ -40,6 +39,7 @@ class AdeelDemenagement extends StatelessWidget {
                 children: [
                   Text("Montage - Démontage : "),
                   FlutterSwitch(
+                    showOnOff: true,
                     inactiveColor: Colors.grey,
                     activeColor: Colors.green,
                     onToggle: (bool value) {
@@ -55,6 +55,7 @@ class AdeelDemenagement extends StatelessWidget {
                 children: [
                   Text("Besoin d'emballage : "),
                   FlutterSwitch(
+                    showOnOff: true,
                     inactiveColor: Colors.grey,
                     activeColor: Colors.green,
                     onToggle: (bool value) {
@@ -66,11 +67,30 @@ class AdeelDemenagement extends StatelessWidget {
               ),
               SizedBox(height: 10),
               Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text("Demande de facture : "),
+                  FlutterSwitch(
+                    showOnOff: true,
+                    inactiveColor: Colors.grey,
+                    activeColor: Colors.green,
+                    onToggle: (bool value) {
+                      _controller.chargeDecharge.value = value;
+                      print(_controller.chargeDecharge.value);
+                    },
+                    value: _controller.chargeDecharge.value,
+                  )
+                ],
+              ),
+              SizedBox(height: 10),
+              Row(
                 children: [
                   Expanded(flex: 3, child: Text("Nombre de salons : ")),
-                  Expanded(
-                    flex: 1,
+                  Container(
+                    height: 40,
+                    width: 40,
                     child: TextField(
+                      textAlign: TextAlign.right,
                       onChanged: (value) =>
                           _controller.numberSalon.value = int.parse(value),
                       controller: _txtNombreChambre,
