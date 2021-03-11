@@ -8,6 +8,10 @@ void myMessage(
     bool isWhite = true,
     bool isPorgress = false}) {
   Get.snackbar(title, message,
+      messageText: Text(
+        message,
+        style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+      ),
       snackPosition: SnackPosition.BOTTOM,
       showProgressIndicator: isPorgress ?? false,
       animationDuration: Duration(seconds: 2),
@@ -21,5 +25,3 @@ void myMessage(
       backgroundGradient:
           LinearGradient(colors: [Colors.blue, Colors.blueAccent]));
 }
-
-

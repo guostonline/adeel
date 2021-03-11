@@ -44,6 +44,7 @@ class AdeelDemenagement extends StatelessWidget {
                     activeColor: Colors.green,
                     onToggle: (bool value) {
                       _controller.montageDementage.value = value;
+                      print(_controller.montageDementage.value);
                     },
                     value: _controller.montageDementage.value,
                   )
@@ -60,6 +61,7 @@ class AdeelDemenagement extends StatelessWidget {
                     activeColor: Colors.green,
                     onToggle: (bool value) {
                       _controller.besoinEmbalage.value = value;
+                      print(_controller.besoinEmbalage.value);
                     },
                     value: _controller.besoinEmbalage.value,
                   ),
@@ -75,10 +77,10 @@ class AdeelDemenagement extends StatelessWidget {
                     inactiveColor: Colors.grey,
                     activeColor: Colors.green,
                     onToggle: (bool value) {
-                      _controller.chargeDecharge.value = value;
-                      print(_controller.chargeDecharge.value);
+                      _controller.avecFacture.value = value;
+                      print(_controller.avecFacture.value);
                     },
-                    value: _controller.chargeDecharge.value,
+                    value: _controller.avecFacture.value,
                   )
                 ],
               ),
@@ -88,7 +90,7 @@ class AdeelDemenagement extends StatelessWidget {
                   Expanded(flex: 3, child: Text("Nombre de salons : ")),
                   Container(
                     height: 40,
-                    width: 40,
+                    width: 60,
                     child: TextField(
                       textAlign: TextAlign.right,
                       onChanged: (value) =>

@@ -21,9 +21,7 @@ Widget myCardHeader(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(title,
-            style: GoogleFonts.abel(
-              fontSize: 25,
-            )),
+            style: GoogleFonts.abel(fontSize: 25, fontWeight: FontWeight.bold)),
         Padding(
           padding: EdgeInsets.only(left: 20),
           child: Card(
@@ -89,7 +87,9 @@ Widget disponibilite(
       () => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text("Disponibilié", style: GoogleFonts.abel(fontSize: 25)),
+          Text("Disponibilié",
+              style:
+                  GoogleFonts.abel(fontSize: 25, fontWeight: FontWeight.bold)),
           Padding(
             padding: EdgeInsets.only(left: 20),
             child: Card(
@@ -139,15 +139,15 @@ Widget disponibilite(
   );
 }
 
-Widget categorie(
-    {@required TextEditingController controllerProduit,
-    @required TextEditingController controllerPoids}) {
+Widget categorie() {
   return Container(
     child: Obx(
       () => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text("Categorie", style: GoogleFonts.abel(fontSize: 25)),
+          Text("Categorie",
+              style:
+                  GoogleFonts.abel(fontSize: 25, fontWeight: FontWeight.bold)),
           Padding(
             padding: EdgeInsets.only(left: 20),
             child: Card(
@@ -170,14 +170,13 @@ Widget categorie(
                                   value: value,
                                 );
                               }).toList(),
-                              hint: _controller.categorie.value == ""
-                                  ? Text(
-                                      "Adeel Déménagement",
-                                      style: GoogleFonts.abel(),
-                                    )
-                                  : Text(_controller.categorie.value,
-                                      style: GoogleFonts.abel()),
-                              isExpanded: true,
+                              isDense: true,
+                              hint: Text(
+                                _controller.categorie.value,
+                                style: TextStyle(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold),
+                              ),
                               onChanged: (value1) {
                                 _controller.categorie.value = value1;
 

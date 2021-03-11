@@ -4,7 +4,9 @@ import 'package:ship_me/Logics/Demande.dart';
 import 'package:flutter_switch/flutter_switch.dart';
 
 Demande _controller = Get.put(Demande());
-TextEditingController _txtNombreChambre;
+
+TextEditingController _txtNumberProduit;
+TextEditingController _txttotalweight;
 
 class LivraisonExpress extends StatelessWidget {
   const LivraisonExpress({Key key}) : super(key: key);
@@ -22,12 +24,14 @@ class LivraisonExpress extends StatelessWidget {
                   Expanded(flex: 3, child: Text("Quantités des colis : ")),
                   Container(
                     height: 40,
-                    width: 40,
+                    width: 60,
                     child: TextField(
                       textAlign: TextAlign.right,
-                      onChanged: (value) =>
-                          _controller.numberSalon.value = int.parse(value),
-                      controller: _txtNombreChambre,
+                      onChanged: (value) {
+                        _controller.numberOfProduit.value = int.parse(value);
+                        print(_controller.numberOfProduit.value);
+                      },
+                      controller: _txtNumberProduit,
                       keyboardType: TextInputType.number,
                       decoration: InputDecoration(
                         enabledBorder: OutlineInputBorder(
@@ -49,14 +53,15 @@ class LivraisonExpress extends StatelessWidget {
                   Expanded(flex: 3, child: Text("Poids total des colis : ")),
                   Container(
                     height: 40,
-                    width: 40,
+                    width: 100,
                     child: TextField(
                       textAlign: TextAlign.right,
                       onChanged: (value) =>
-                          _controller.numberSalon.value = int.parse(value),
-                      controller: _txtNombreChambre,
+                          _controller.totalweight.value = int.parse(value),
+                      controller: _txttotalweight,
                       keyboardType: TextInputType.number,
                       decoration: InputDecoration(
+                        suffixText: "Kg",
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(10.0)),
                           borderSide: BorderSide(color: Colors.grey),
@@ -80,10 +85,10 @@ class LivraisonExpress extends StatelessWidget {
                     inactiveColor: Colors.grey,
                     activeColor: Colors.green,
                     onToggle: (bool value) {
-                      _controller.chargeDecharge.value = value;
-                      print(_controller.chargeDecharge.value);
+                      _controller.avecFacture.value = value;
+                      print(_controller.avecFacture.value);
                     },
-                    value: _controller.chargeDecharge.value,
+                    value: _controller.avecFacture.value,
                   )
                 ],
               ),

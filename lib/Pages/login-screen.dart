@@ -43,6 +43,7 @@ class _LoginScreenState extends State<LoginScreen> {
             title: "Bienvenue", message: user.displayName, isWhite: false);
         _controller.userName.value = user.displayName;
         _controller.userEmail.value = user.email;
+        _controller.userPhoto.value = user.photoURL;
         _controller.userTelephone.value = localRead("telephone");
       } else if (_controller.isLoginGoogle.value == true) {
         Get.off(PageMain());
@@ -130,6 +131,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                       value.user.displayName;
                                   _controller.userEmail.value =
                                       value.user.email;
+                                  _controller.userPhoto.value =
+                                      value.user.photoURL;
                                   Get.to(PageMain());
                                 });
                               }),

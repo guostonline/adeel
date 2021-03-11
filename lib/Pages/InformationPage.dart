@@ -56,22 +56,13 @@ class _InformationPageState extends State<InformationPage> {
                         destination: _controller.destination.value,
                         title: "Inforamtions Client"),
                     SizedBox(height: 20),
-                    categorie(
-                      controllerPoids: txtPoidsController,
-                      controllerProduit: txtProduiController,
-                    ),
+                    categorie(),
                     SizedBox(height: 20),
                     disponibilite(context),
                     SizedBox(height: 20),
                     ElevatedButton(
                       onPressed: () {
-                        if (_controller.categorie.value ==
-                            "Je veux transporter...") {
-                          myMessage(
-                              title: "Alert",
-                              message: "Choisir le categorie de transport!",
-                              isWhite: false);
-                        } else if (_controller.userTelephone.value.isEmpty) {
+                        if (_controller.userTelephone.value == null) {
                           showMaterialDialog();
                         } else if (_controller.dateDesLe.value.isEmpty ||
                             _controller.dateJusqua.value.isEmpty) {

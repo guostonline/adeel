@@ -19,18 +19,29 @@ class ReadyToSend extends StatelessWidget {
         children: [
           Spacer(flex: 2),
           Text(
-            "Les informations Finale",
+            "Adeel est prêt !",
             style: GoogleFonts.aladin(fontSize: 30),
           ),
-          Divider(color: Colors.black),
+          Divider(color: Colors.black, endIndent: 30, indent: 30),
           Center(
             child: Padding(
               padding: const EdgeInsets.all(15.0),
-              child: AutoSizeText(
-                  "Bonjour ${_controller.userName.value} vous demandez de transporter ${_controller.categorie.value} avec nombre de produits (${_controller.numberOfProduit} unités), total piods (${_controller.totalweight.value} kg). de bien transporter entre ${_controller.dateDesLe.value} au ${_controller.dateJusqua.value}. vous voulez envoyer cette commande?",
-                  minFontSize: 22,
-                  style:
-                      GoogleFonts.abel(fontWeight: FontWeight.bold, height: 2)),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  AutoSizeText(
+                      """Bonjour ${_controller.userName.value}. \n vous demandez : \n  * ${_controller.categorie.value} * \n  Entre le ${_controller.dateDesLe.value} et le ${_controller.dateJusqua.value}.""",
+                      minFontSize: 22,
+                      style: GoogleFonts.abel(
+                          fontWeight: FontWeight.bold, height: 2)),
+                  SizedBox(height: 100),
+                  Divider(color: Colors.black, endIndent: 30, indent: 30),
+                  AutoSizeText(
+                    "Le détail de votre commande a bien été pris en compte. Souhaitez-vous envoyer votre demande de devis ?",
+                    minFontSize: 18,
+                  )
+                ],
+              ),
             ),
           ),
           Spacer(
@@ -40,12 +51,12 @@ class ReadyToSend extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               ElevatedButton(
-                onPressed: () => Get.to(InformationPage()),
+                onPressed: () => print(_controller
+                    .numberOfProduit.value), //Get.to(InformationPage()),
                 child: Text("Modifier"),
               ),
               ElevatedButton(
-                onPressed: () =>sendEmail(),
-
+                onPressed: () => sendEmail(),
                 child: Text("Envoyer"),
               ),
             ],

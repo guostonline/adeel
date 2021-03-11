@@ -13,20 +13,23 @@ class Demande extends GetxController {
   RxString destination = "".obs;
   RxString dateDesLe = "".obs;
   RxString dateJusqua = "".obs;
-  RxInt numberOfProduit = 0.obs;
-  RxInt totalweight = 0.obs;
-  RxString categorieImage = "images/logo.png".obs;
+
+  RxString categorieImage = "images/demenagement.jpg".obs;
   //User Inforamtion
   RxString userName = "".obs;
   RxString userEmail = "".obs;
   RxString userTelephone = "".obs;
-  RxString userPhoto = "images/user.png".obs;
+  RxString userPhoto = "".obs;
 
   //Addel déménagement
   RxBool chargeDecharge = false.obs;
   RxBool montageDementage = false.obs;
   RxBool besoinEmbalage = false.obs;
+  RxBool avecFacture = false.obs;
+
   RxInt numberSalon = 0.obs;
+  RxInt numberOfProduit = 0.obs;
+  RxInt totalweight = 0.obs;
 
   //TextField focus variables
   RxBool txtFieldDe = false.obs;
