@@ -38,12 +38,18 @@ dependencies:
   intl: ^0.16.1
   flutter_switch: ^0.2.2
   mailer2: ^1.2.5
+  
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   change_app_package_name: ^0.1.2
+  flutter_launcher_icons: ^0.8.0
 
+flutter_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "images/logo2.png"
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 # The following section is specific to Flutter.

@@ -50,7 +50,7 @@ String livraisonExpress =
                    <p> Ville de départ : ${_controller.localite.value} ----------> ${_controller.destination.value} </p>\n
                    <p> Date de : ${_controller.dateDesLe.value} ----------> ${_controller.dateJusqua.value}</p>
                    ---------------------------------------------------------------------------------------------------
-                   <p> Nombre de produits : ${_controller.numberOfProduit.value.toString()}. Total Poids : ${_controller.totalweight.value.toString()}. </p>\n
+                   <p> Nombre de produits : ${_controller.numberOfProduit.value.toString()}  Total Poids : ${_controller.totalweight.value.toString()} Kg </p>\n
                   -----------------------------------------------------------------------------------------------------
                    <p> Besoin de facture : ${fromTrueFalseToFr(_controller.avecFacture.value)} </p>\n
                     """;

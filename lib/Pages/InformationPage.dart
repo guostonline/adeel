@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:ship_me/Logics/Demande.dart';
@@ -104,6 +105,7 @@ class _InformationPageState extends State<InformationPage> {
                     keyboardType: TextInputType.number,
                     controller: _txtDialogue,
                     decoration: InputDecoration(
+                        prefixIcon: Icon(FontAwesomeIcons.phone),
                         labelText: "Saisie votre numéro téléphone."),
                   ),
                 ],

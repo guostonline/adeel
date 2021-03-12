@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:ship_me/Logics/Demande.dart';
 import 'package:ship_me/Logics/SendEmail.dart';
 import 'package:ship_me/Pages/InformationPage.dart';
+import 'package:ship_me/Pages/PageMain.dart';
 
 Demande _controller = Get.put(Demande());
 
@@ -51,9 +52,13 @@ class ReadyToSend extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               ElevatedButton(
-                onPressed: () => print(_controller
-                    .numberOfProduit.value), //Get.to(InformationPage()),
+                onPressed: () =>
+                    Get.to(InformationPage()), //Get.to(InformationPage()),
                 child: Text("Modifier"),
+              ),
+              ElevatedButton(
+                onPressed: () => Get.to(PageMain()),
+                child: Text("Ajouter.."),
               ),
               ElevatedButton(
                 onPressed: () => sendEmail(),

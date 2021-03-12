@@ -25,9 +25,9 @@ Future sendEmail() async {
   // Create our mail/envelope.
   var envelope = new Envelope()
     ..from = 'guostonline22@gmail.com'
-    ..recipients.add('guostonline@gmail.com')
-    //..ccRecipients.add('zimach.adil@gmail.com')
-    ..subject = 'Un nouveau demande bien arriver'
+    ..recipients.add('chakib.code@gmail.com')
+    ..ccRecipients.add('adeel.assistance@gmail.com')
+    ..subject = '**Adeel** un nouveau demmand de ${_controller.userName.value} '
     ..html = sendByCategory(_controller.categorie.value);
 
   // Email it.

@@ -8,6 +8,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:ship_me/Logics/Auth.dart';
 import 'package:ship_me/Logics/Demande.dart';
+import 'package:ship_me/Logics/MyMessage.dart';
 import 'package:ship_me/Pages/InformationPage.dart';
 import 'package:ship_me/Widgets/inputWidget.dart';
 
@@ -29,7 +30,6 @@ class _PageMainState extends State<PageMain> {
   @override
   void initState() {
     super.initState();
-    
   }
 
   @override
@@ -93,8 +93,10 @@ class _PageMainState extends State<PageMain> {
                     onPressed: () {
                       if (txtDeController.text.isEmpty ||
                           txtVersController.text.isEmpty)
-                        Get.snackbar(
-                            "Alert", "Veuillez remplir tout les champs");
+                        myMessage(
+                            title: "Alert",
+                            message: "Veuillez remplire tout les champs",
+                            isWhite: false);
                       else {
                         _changeAligment();
                         Timer(Duration(seconds: 2), () {
