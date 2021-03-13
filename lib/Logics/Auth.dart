@@ -9,7 +9,7 @@ import 'package:ship_me/Logics/MyMessage.dart';
 import 'package:ship_me/Logics/SaveInformation.dart';
 
 import 'package:ship_me/Pages/login-screen.dart';
-
+DateTime selectedDate = DateTime.now();
 FirebaseAuth instance = FirebaseAuth.instance;
 FirebaseFirestore ds = FirebaseFirestore.instance;
 GoogleSignIn googleSignIn = GoogleSignIn();
@@ -66,14 +66,28 @@ Future<UserCredential> signUpWithEmailAndPassword(
     return result;
   } on FirebaseAuthException catch (e) {
     if (e.message == "The email address is badly formatted.")
-      Get.snackbar("Alert", "Invalid email réessayer SVP");
+      myMessage(
+          title: "Alert",
+          message: "Invalid email réessayer SVP",
+          isWhite: true);
+
     if (e.message == "The email address is already in use by another account.")
-      Get.snackbar("Alert", "Ce email est déja enregistrer");
+      myMessage(
+          title: "Alert",
+          message: "L'adresse e-mail est déjà utilisée par un autre compte.",
+          isWhite: true);
     if (e.message == "Password should be at least 6 characters")
-      Get.snackbar("Alert", "Ce mot de pass est faible. 6 characters ou plus");
+      myMessage(
+          title: "Alert",
+          message: "Ce mot de pass est faible. 6 characters ou plus",
+          isWhite: true);
     if (e.message ==
         "The password is invalid or the user does not have a password.")
-      Get.snackbar("Alert", "Invalide mot de pass réessayer SVP ");
+      myMessage(
+          title: "Alert",
+          message: "Invalide mot de pass réessayer SVP ",
+          isWhite: true);
+
     print(e.message);
   } catch (e) {
     Get.snackbar("Alert", e.message);
@@ -96,11 +110,12 @@ String currentUser() {
   return instance.currentUser.uid;
 }
 
-void singIn({String email, String password, String name}) async {
+Future singIn({String email, String password, String name}) async {
+  _controller.userName.value = name;
+  _controller.userEmail.value = email;
+
   try {
-    _controller.userName.value = name;
-    _controller.userEmail.value = email;
-    FirebaseAuth.instance
+    await FirebaseAuth.instance
         .signInWithEmailAndPassword(
       email: email,
       password: password,

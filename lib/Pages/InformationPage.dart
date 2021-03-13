@@ -46,8 +46,17 @@ class _InformationPageState extends State<InformationPage> {
             child: SingleChildScrollView(
               child: Obx(
                 () => Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    SizedBox(height: 100),
+                    SizedBox(height: 50),
+                    IconButton(
+                        icon: Icon(
+                          Icons.reply_outlined,
+                          color: Colors.white,
+                          semanticLabel: "Retour",
+                        ),
+                        onPressed: () => Navigator.of(context).pop()),
+                    // SizedBox(height: 70),
                     myCardHeader(
                         nameClient: _controller.userName.value,
                         email: _controller.userEmail.value,
@@ -61,23 +70,27 @@ class _InformationPageState extends State<InformationPage> {
                     SizedBox(height: 20),
                     disponibilite(context),
                     SizedBox(height: 20),
-                    ElevatedButton(
-                      onPressed: () {
-                        if (_controller.userTelephone.value == null) {
-                          showMaterialDialog();
-                        } else if (_controller.dateDesLe.value.isEmpty ||
-                            _controller.dateJusqua.value.isEmpty) {
-                          myMessage(
-                              title: "Alert",
-                              message:
-                                  "Choisir les deux dates de disponibilité",
-                              isWhite: false);
-                        } else
-                          Get.to(ReadyToSend());
+                    Container(
+                      padding: EdgeInsets.symmetric(horizontal: 80),
+                      width: double.infinity / 2,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          if (_controller.userTelephone.value == null) {
+                            showMaterialDialog();
+                          } else if (_controller.dateDesLe.value.isEmpty ||
+                              _controller.dateJusqua.value.isEmpty) {
+                            myMessage(
+                                title: "Alert",
+                                message:
+                                    "Choisir les deux dates de disponibilité",
+                                isWhite: false);
+                          } else
+                            Get.to(ReadyToSend());
 
-                        // Get.to(ReadyToSend());
-                      },
-                      child: Text("Votre devis dans 30min"),
+                          // Get.to(ReadyToSend());
+                        },
+                        child: Text("Votre devis dans 30min"),
+                      ),
                     ),
                     SizedBox(height: 20),
                   ],

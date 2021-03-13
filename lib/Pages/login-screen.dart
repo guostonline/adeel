@@ -56,6 +56,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return Stack(
       children: [
         BackgroundImage(
@@ -104,16 +105,32 @@ class _LoginScreenState extends State<LoginScreen> {
                           SizedBox(
                             height: 25,
                           ),
-                          RoundedButton(
-                            buttonName: 'Login',
-                            myFunction: () {
-                              _changeAligment();
-                              singIn(
-                                  email: _txtEmailController.text,
-                                  password: _txtPasswordController.text);
-                              print("chakib an error on login");
-                            },
-                            isGoogle: false,
+                          Container(
+                            height: size.height * 0.08,
+                            width: size.width * 0.8,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(16),
+                              color: kBlue,
+                            ),
+                            child: TextButton(
+                              onPressed: () {
+                                if (_txtEmailController.text.isEmpty ||
+                                    _txtPasswordController.text.isEmpty)
+                                  myMessage(
+                                      title: "Alert",
+                                      message: "Remplire tout les champs svp",
+                                      isWhite: true);
+                                else
+                                  singIn(
+                                      email: _txtEmailController.text,
+                                      password: _txtPasswordController.text);
+                              },
+                              child: Text(
+                                "Login",
+                                style: kBodyTextButton.copyWith(
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ),
                           ),
                           SizedBox(height: 20),
                           RoundedButton(
@@ -133,6 +150,12 @@ class _LoginScreenState extends State<LoginScreen> {
                                       value.user.email;
                                   _controller.userPhoto.value =
                                       value.user.photoURL;
+                                  saveUserToFireStore(
+                                      value.user.uid,
+                                      value.user.displayName,
+                                      value.user.email,
+                                      value.user.photoURL,
+                                      "pas de téléphone");
                                   Get.to(PageMain());
                                 });
                               }),

@@ -9,6 +9,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:ship_me/Logics/Auth.dart';
 import 'package:ship_me/Logics/Demande.dart';
 import 'package:ship_me/Logics/MyMessage.dart';
+import 'package:ship_me/Logics/SaveInformation.dart';
 import 'package:ship_me/Pages/InformationPage.dart';
 import 'package:ship_me/Widgets/inputWidget.dart';
 
@@ -56,10 +57,14 @@ class _PageMainState extends State<PageMain> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       IconButton(
-                          icon: Icon(Icons.logout),
+                          icon: Icon(
+                            Icons.logout,
+                            color: Colors.white,
+                          ),
                           onPressed: () {
                             instance.signOut();
                             googleLogOut();
+                            localReset();
                           }),
                       Text(
                         _controller.userName.value != null
@@ -68,10 +73,9 @@ class _PageMainState extends State<PageMain> {
                         style: TextStyle(fontSize: 20),
                       ),
                       CircleAvatar(
-                        backgroundImage:
-                            _controller.userPhoto.value == "images/user.png"
-                                ? AssetImage("images/user.png")
-                                : NetworkImage(_controller.userPhoto.value),
+                        backgroundImage: _controller.userPhoto.value == null
+                            ? AssetImage("images/user.png")
+                            : NetworkImage(_controller.userPhoto.value),
                       ),
                     ],
                   ),

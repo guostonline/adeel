@@ -10,7 +10,10 @@ void myMessage(
   Get.snackbar(title, message,
       messageText: Text(
         message,
-        style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+        style: TextStyle(
+            color: isWhite ? Colors.white : Colors.black,
+            fontSize: 16,
+            fontWeight: FontWeight.bold),
       ),
       snackPosition: SnackPosition.BOTTOM,
       showProgressIndicator: isPorgress ?? false,

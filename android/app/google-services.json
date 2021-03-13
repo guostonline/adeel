@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "491711060603-4s4qajgv3ef2oqm728c2dpa4adk7kbdj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.chakibelfil.adeel",
+            "certificate_hash": "8c5769852860cc872711466e61ef2d3dd77fa398"
+          }
+        },
+        {
           "client_id": "491711060603-7g949ms2jpk224p3usp2uhtdqphq4f75.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

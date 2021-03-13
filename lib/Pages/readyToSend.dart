@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:ship_me/Logics/Demande.dart';
+import 'package:ship_me/Logics/SaveInformation.dart';
 import 'package:ship_me/Logics/SendEmail.dart';
 import 'package:ship_me/Pages/InformationPage.dart';
 import 'package:ship_me/Pages/PageMain.dart';
@@ -57,11 +58,16 @@ class ReadyToSend extends StatelessWidget {
                 child: Text("Modifier"),
               ),
               ElevatedButton(
-                onPressed: () => Get.to(PageMain()),
+                onPressed: () {
+                  _controller.iniAll();
+                  Get.to(PageMain());
+                },
                 child: Text("Ajouter.."),
               ),
               ElevatedButton(
-                onPressed: () => sendEmail(),
+                onPressed: () => sendEmail().then((value) {
+                  saveInformationToFireStor(instance.currentUser.uid);
+                }),
                 child: Text("Envoyer"),
               ),
             ],

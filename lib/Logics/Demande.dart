@@ -3,6 +3,7 @@ import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:ship_me/Pages/CategoriePages/AdeelDemenagement.dart';
 import 'package:ship_me/Pages/CategoriePages/LivraisonExpress.dart';
 import 'package:ship_me/Pages/CategoriePages/TransportDeMarchandise.dart';
+import 'package:ship_me/Pages/PageMain.dart';
 
 DateTime selectedDate = DateTime.now();
 
@@ -52,5 +53,23 @@ class Demande extends GetxController {
       default:
         return AdeelDemenagement();
     }
+  }
+
+  iniAll() {
+    categorie.value = "Adeel Déménagement";
+    localite.value = "";
+    destination.value = "";
+    dateDesLe.value = "";
+    dateJusqua.value = "";
+    chargeDecharge.value = false;
+    montageDementage.value = false;
+    besoinEmbalage.value = false;
+    avecFacture.value = false;
+
+    numberSalon.value = 0;
+    numberOfProduit.value = 0;
+    totalweight.value = 0;
+    txtDeController.clear();
+    txtVersController.clear();
   }
 }
