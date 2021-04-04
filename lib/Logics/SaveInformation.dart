@@ -35,19 +35,20 @@ localReset() {
   _myLocalDB.erase();
 }
 
-Future saveInformationToFireStor(String userID) async {
-  var formattedDate = DateFormat('dd/MM/yyyy').format(dateNow);
-  await ds.collection("Demandes").doc().set({
-    "User": "/Users/$userID",
+saveInformationToFireStor(String userID) async {
+  var formattedDate = DateFormat('dd/MM/yyyy-hh:mm:ss').format(dateNow);
+  var myDs = ds.collection("Demandes");
+  myDs.add({
+    "User": "$userID",
     "Date de comande": formattedDate,
     "Categorie": _controller.categorie.value,
     "Localite": _controller.localite.value,
     "Destination": _controller.destination.value,
-    "Des le": _controller.dateDesLe.value,
-    "Jusqu'à": _controller.dateJusqua.value,
-    "Chargement - Déchargement": _controller.chargeDecharge.value,
-    "Montage - Démontage": _controller.montageDementage.value,
-    "Besoin d'emballage": _controller.besoinEmbalage.value,
+    "DesLe": _controller.dateDesLe.value,
+    "Jusqua": _controller.dateJusqua.value,
+    "Chargement-Dechargment": _controller.chargeDecharge.value,
+    "Montage-Demontage": _controller.montageDementage.value,
+    "Besoin-Embalage": _controller.besoinEmbalage.value,
     "Nombre de salons": _controller.numberSalon.value,
     "Demande de Facture": _controller.avecFacture.value,
     "Quantité": _controller.numberOfProduit.value,
@@ -57,7 +58,13 @@ Future saveInformationToFireStor(String userID) async {
     "Refus": false,
     "Montant": 0,
     "Valider": false
-  });
+  }).then((value) => {
+        myDs.doc(value.id).update({"ID": value.id}),
+      });
+  ds
+      .collection("Users")
+      .doc(userID)
+      .update({"Téléphone": _controller.userTelephone.value, "ID": userID});
 }
 
 Future saveUserToFireStore(String userID, String name, String email,
@@ -66,6 +73,7 @@ Future saveUserToFireStore(String userID, String name, String email,
     "Nom et prenom": name,
     "Email": email,
     "Photo url": photoUrl,
-    "Téléphone": numberPhone
+    "Téléphone": numberPhone,
+    "ID": userID
   });
 }
