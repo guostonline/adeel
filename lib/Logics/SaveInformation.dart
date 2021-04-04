@@ -35,9 +35,10 @@ localReset() {
   _myLocalDB.erase();
 }
 
-Future saveInformationToFireStor(String userID) async {
-  var formattedDate = DateFormat('dd/MM/yyyy').format(dateNow);
-  await ds.collection("Demandes").doc().set({
+saveInformationToFireStor(String userID) async {
+  var formattedDate = DateFormat('dd/MM/yyyy-hh:mm:ss').format(dateNow);
+  var myDs = ds.collection("Demandes");
+  myDs.add({
     "User": "$userID",
     "Date de comande": formattedDate,
     "Categorie": _controller.categorie.value,
@@ -57,9 +58,13 @@ Future saveInformationToFireStor(String userID) async {
     "Refus": false,
     "Montant": 0,
     "Valider": false
-  }).then((value) {
-   
-  });
+  }).then((value) => {
+        myDs.doc(value.id).update({"ID": value.id}),
+      });
+  ds
+      .collection("Users")
+      .doc(userID)
+      .update({"Téléphone": _controller.userTelephone.value, "ID": userID});
 }
 
 Future saveUserToFireStore(String userID, String name, String email,
@@ -68,6 +73,7 @@ Future saveUserToFireStore(String userID, String name, String email,
     "Nom et prenom": name,
     "Email": email,
     "Photo url": photoUrl,
-    "Téléphone": numberPhone
+    "Téléphone": numberPhone,
+    "ID": userID
   });
 }
