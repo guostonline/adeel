@@ -83,6 +83,7 @@ class _InformationPageState extends State<InformationPage> {
                                 title: "Alert",
                                 message:
                                     "Choisir les deux dates de disponibilité",
+                               
                                 isWhite: false);
                           } else
                             Get.to(ReadyToSend());

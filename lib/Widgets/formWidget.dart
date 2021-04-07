@@ -105,7 +105,7 @@ Widget disponibilite(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text("Disponible dés le :"),
-                          Text(_controller.dateDesLe.value),
+                          Text(dateToString(_controller.dateDesLe.value)),
                           IconButton(
                               icon: Icon(Icons.date_range),
                               onPressed: () {
@@ -118,7 +118,7 @@ Widget disponibilite(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text("Disponible jusqu'à :"),
-                          Text(_controller.dateJusqua.value),
+                          Text(dateToString(_controller.dateJusqua.value)),
                           IconButton(
                               icon: Icon(Icons.date_range),
                               onPressed: () {

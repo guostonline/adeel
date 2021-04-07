@@ -36,16 +36,16 @@ localReset() {
 }
 
 saveInformationToFireStor(String userID) async {
-  var formattedDate = DateFormat('dd/MM/yyyy-hh:mm:ss').format(dateNow);
+  var formattedDate = DateFormat('hh:mm-dd/MM/yyyy').format(dateNow);
   var myDs = ds.collection("Demandes");
   myDs.add({
     "User": "$userID",
-    "Date de comande": formattedDate,
+    "Date de comande": dateNow,
     "Categorie": _controller.categorie.value,
     "Localite": _controller.localite.value,
     "Destination": _controller.destination.value,
-    "DesLe": _controller.dateDesLe.value,
-    "Jusqua": _controller.dateJusqua.value,
+    "DesLe":Timestamp.fromDate(DateTime.parse(_controller.dateDesLe.value)) ,
+    "Jusqua":Timestamp.fromDate(DateTime.parse(_controller.dateJusqua.value)) ,
     "Chargement-Dechargment": _controller.chargeDecharge.value,
     "Montage-Demontage": _controller.montageDementage.value,
     "Besoin-Embalage": _controller.besoinEmbalage.value,
@@ -68,12 +68,13 @@ saveInformationToFireStor(String userID) async {
 }
 
 Future saveUserToFireStore(String userID, String name, String email,
-    String photoUrl, String numberPhone) async {
+    String photoUrl, String numberPhone,String messagingToken) async {
   await ds.collection("Users").doc(userID).set({
+    "ID": userID,
     "Nom et prenom": name,
     "Email": email,
     "Photo url": photoUrl,
     "Téléphone": numberPhone,
-    "ID": userID
+    "Messaging token":messagingToken
   });
 }

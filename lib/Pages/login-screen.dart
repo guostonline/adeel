@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
@@ -24,6 +25,7 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   FirebaseAuth instance = FirebaseAuth.instance;
+  FirebaseMessaging fbMessaging = FirebaseMessaging.instance;
   AlignmentGeometry _alignment = Alignment.centerLeft;
   TextEditingController _txtEmailController = TextEditingController();
   TextEditingController _txtPasswordController = TextEditingController();
@@ -151,11 +153,13 @@ class _LoginScreenState extends State<LoginScreen> {
                                   _controller.userPhoto.value =
                                       value.user.photoURL;
                                   saveUserToFireStore(
-                                      value.user.uid,
-                                      value.user.displayName,
-                                      value.user.email,
-                                      value.user.photoURL,
-                                      "pas de téléphone");
+                                    value.user.uid,
+                                    value.user.displayName,
+                                    value.user.email,
+                                    value.user.photoURL,
+                                    "pas de téléphone",
+                                    await fbMessaging.getToken(),
+                                  );
                                   Get.to(PageMain());
                                 });
                               }),

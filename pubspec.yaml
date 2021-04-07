@@ -25,26 +25,26 @@ dependencies:
     sdk: flutter
   auto_size_text: ^2.1.0
   autocomplete_textfield: ^1.7.3
-  cloud_firestore: ^0.16.0+1
-  cupertino_icons: ^1.0.0
-  firebase_auth: ^0.20.1
-  firebase_core: ^0.7.0
-  firebase_storage: ^7.0.0
-  font_awesome_flutter: ^8.10.0
-  get: ^3.25.4
-  get_storage: ^1.4.0
-  google_fonts: ^1.1.2
-  google_sign_in: ^4.5.9
-  intl: ^0.16.1
-  flutter_switch: ^0.2.2
-  mailer2: ^1.2.5
+  cloud_firestore: ^1.0.3
+  cupertino_icons: ^1.0.2
+  firebase_auth: ^1.0.1
+  firebase_core: ^1.0.2
   
+  font_awesome_flutter: ^9.0.0
+  get: ^4.1.2
+  get_storage: ^2.0.2
+  google_fonts: ^2.0.0
+  google_sign_in: ^5.0.1
+  intl: ^0.17.0
+  flutter_switch: ^0.3.0
+  mailer2: ^1.2.5
+  firebase_messaging: ^9.1.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   change_app_package_name: ^0.1.2
-  flutter_launcher_icons: ^0.8.0
+  flutter_launcher_icons: ^0.9.0
 
 flutter_icons:
   android: "launcher_icon"

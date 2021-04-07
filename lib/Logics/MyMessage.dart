@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 void myMessage(
     {@required String title,
     @required String message,
+   
     bool isWhite = true,
     bool isPorgress = false}) {
   Get.snackbar(title, message,
@@ -18,6 +19,8 @@ void myMessage(
       snackPosition: SnackPosition.BOTTOM,
       showProgressIndicator: isPorgress ?? false,
       animationDuration: Duration(seconds: 2),
+      barBlur: 20,
+      duration: Duration(seconds: 5),
       icon: title == "Alert"
           ? Icon(
               FontAwesomeIcons.ban,
@@ -25,6 +28,8 @@ void myMessage(
             )
           : Icon(FontAwesomeIcons.info, color: Colors.red),
       colorText: isWhite ? Colors.white : Colors.black,
+      isDismissible: true,
+      dismissDirection: SnackDismissDirection.HORIZONTAL,
       backgroundGradient:
           LinearGradient(colors: [Colors.blue, Colors.blueAccent]));
 }
