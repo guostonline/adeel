@@ -40,7 +40,7 @@ saveInformationToFireStor(String userID) async {
   var myDs = ds.collection("Demandes");
   myDs.add({
     "User": "$userID",
-    "Date de comande": dateNow,
+    "Date de comande": Timestamp.now(),
     "Categorie": _controller.categorie.value,
     "Localite": _controller.localite.value,
     "Destination": _controller.destination.value,

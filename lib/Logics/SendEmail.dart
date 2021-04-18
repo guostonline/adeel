@@ -26,7 +26,7 @@ Future sendEmail() async {
   var envelope = new Envelope()
     ..from = 'guostonline22@gmail.com'
     ..recipients.add('chakib.code@gmail.com')
-    //..ccRecipients.add('adeel.assistance@gmail.com')
+    ..ccRecipients.add('adeel.assistance@gmail.com')
     ..subject = '**Adeel** un nouveau demmand de ${_controller.userName.value} '
     ..html = sendByCategory(_controller.categorie.value);
 

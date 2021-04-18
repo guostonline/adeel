@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:ship_me/Logics/Demande.dart';
 import 'package:ship_me/Logics/SaveInformation.dart';
 import 'package:ship_me/Logics/SendEmail.dart';
+import 'package:ship_me/Logics/TimeFunctions.dart';
 import 'package:ship_me/Pages/InformationPage.dart';
 import 'package:ship_me/Pages/PageMain.dart';
 
@@ -32,7 +33,7 @@ class ReadyToSend extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   AutoSizeText(
-                      """Bonjour ${_controller.userName.value}. \n vous demandez : \n  * ${_controller.categorie.value} * \n  Entre le ${_controller.dateDesLe.value} et le ${_controller.dateJusqua.value}.""",
+                      """Bonjour ${_controller.userName.value}. \n vous demandez : \n  * ${_controller.categorie.value} * \n  Entre le ${dateToString(_controller.dateDesLe.value)} et le ${dateToString(_controller.dateJusqua.value)}.""",
                       minFontSize: 22,
                       style: GoogleFonts.abel(
                           fontWeight: FontWeight.bold, height: 2)),
